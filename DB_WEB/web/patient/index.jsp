@@ -26,21 +26,32 @@
             String myname = (String) session.getAttribute("username");
             int userid = ((Integer) session.getAttribute("userid")).intValue();
 
-            Appointment a = AppointmentHelper.getNextAppointment(userid);
-            
-            
-            int doctid =  a.getDoctorId();
-            String doctname = DoctorHelper.getName(doctid);
-            
-            
-            DateFormat format = new SimpleDateFormat("MM/dd/yyyy HH:mm");
-            String timestart = format.format(new Date(a.getStartTime()));
+            String appContent = "";
 
-            String timeend = format.format(new Date(a.getEndTime()));
-            
-            
-            
-            
+            Appointment a = AppointmentHelper.getNextAppointment(userid);
+
+
+            if (a == null) {
+                appContent = "Not future appointment not avialable";
+            } else {
+
+
+                int doctid = a.getDoctorId();
+                String doctname = DoctorHelper.getName(doctid);
+
+
+                DateFormat format = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+                String timestart = format.format(new Date(a.getStartTime()));
+
+                String timeend = format.format(new Date(a.getEndTime()));
+                
+                 appContent="<table border=\"1\"><tr><td>Doctor Name</td> <td>Appointment Time</td><td>End Time</td></tr>";
+
+                 appContent =appContent + String.format("<tr><td>%s</td> <td>%s</td><td>%s</td></tr><table>"
+                        ,doctname, timestart,timeend);
+            }
+
+
         %>
 
         <table>
@@ -55,14 +66,7 @@
             <tr>
                 <td><h3> Next Appointment:</h3>
 
-                    <table border="1">
-                        <tr border="1">
-                            <td>Doctor Name</td> <td>Appointment Time</td><td>End Time</td>
-                        </tr>
-                        <tr>
-                            <td><%=doctname%></td> <td><%=timestart%></td> <td><%=timeend%></td>
-                        </tr>
-                    </table>
+                            <%=appContent%>
 
                 </td>
 
@@ -79,11 +83,11 @@
 
                         </tr>
                         <tr>
-                            
-                            
-                            
+
+
+
                             <td>a</td><td>a</td><td>a</td><td>a</td><td>a</td>
-                             
+
 
                         </tr>
                     </table>
@@ -92,7 +96,7 @@
             <tr >
 
                 <td align="right">
-                    <a href="">All Record</a>
+                    <a href="records.jsp">All Record</a>
                     <a href="">Search Record</a>
                 </td>
             </tr>
