@@ -12,9 +12,9 @@ package helpers;
  */
 public class RoleHelper {
     public enum Role {
+        Patient,
         Doctor,
         Staff,
-        Patient,
         Finance,
         Unknown
     }
