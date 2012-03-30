@@ -39,7 +39,7 @@
                 recordId = r.getRecordId();
                 doctorName = DoctorHelper.getName(r.getDoctorId());
                 
-                DateFormat format = new SimpleDateFormat("MM/dd/YYYY HH:mm");
+                DateFormat format = new SimpleDateFormat("MM/dd/yyyy HH:mm");
                 String visitstart = format.format(new Date(r.getVisitStart()));
                 String visitend = format.format(new Date(r.getVisitEnd()));
                 

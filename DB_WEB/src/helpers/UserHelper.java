@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package user;
+package helpers;
 
 import db.DB;
 import java.sql.Connection;
@@ -13,7 +13,7 @@ import java.sql.ResultSet;
  *
  * @author Administrator
  */
-public class UserManager {
+public class UserHelper {
 
     public static void addUser(String fName, String lName, int role, String email, String password) {
         Connection connection = null;

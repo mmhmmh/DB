@@ -30,6 +30,7 @@
 
             Appointment a = AppointmentHelper.getNextAppointment(userid);
 
+
             if (a == null) {
                 appContent = "Not future appointment not avialable";
             } else {
@@ -39,7 +40,7 @@
                 String doctname = DoctorHelper.getName(doctid);
 
 
-                DateFormat format = new SimpleDateFormat("MM/dd/YYYY HH:mm");
+                DateFormat format = new SimpleDateFormat("MM/dd/yyyy HH:mm");
                 String timestart = format.format(new Date(a.getStartTime()));
 
                 String timeend = format.format(new Date(a.getEndTime()));
@@ -49,7 +50,6 @@
                  appContent =appContent + String.format("<tr><td>%s</td> <td>%s</td><td>%s</td></tr><table>"
                         ,doctname, timestart,timeend);
             }
-
 
 
         %>
