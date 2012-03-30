@@ -1,5 +1,9 @@
 private/
-build/
+DB_WEB/build/
+DB_APP/dist/
+DB_WEB/dist/
+DB_APP/build/
+DB_EJB/build/
 nbbuild/
 dist/
 nbdist/
