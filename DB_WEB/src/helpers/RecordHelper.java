@@ -22,7 +22,7 @@ public class RecordHelper {
         Connection connection = null;
         ResultSet results;
         PreparedStatement PS = null;
-        String error = "Error in AppointmentHelper.getFutureAppointments";
+        String error = "Error in RecordHelper.getAllRecords";
         List<Record> result = new LinkedList<Record>();
 
         try {
@@ -36,7 +36,7 @@ public class RecordHelper {
             PS.setInt(1, userId);
             
             results = PS.executeQuery();
-            if (results.next()) {
+            while (results.next()) {
                 result.add(new Record(results));
             }
 
@@ -64,22 +64,24 @@ public class RecordHelper {
         Connection connection = null;
         ResultSet results;
         PreparedStatement PS = null;
-        String error = "Error in AppointmentHelper.getFutureAppointments";
+        String error = "Error in RecordHelper.getRecentRecords";
         List<Record> result = new LinkedList<Record>();
 
         try {
             connection = DB.ConnectToDatabase();
             PS = connection.prepareStatement("SELECT * FROM records INNER JOIN "
                     + "appointments ON records.appointment_id=appointments.appointment_id "
-                    + "inner join userinfo ON userinfo.user_id=records.created_by "
-                    + "WHERE patient_id=? ORDER BY visit_start ASC LIMIT ?"
+                    + "INNER JOIN userinfo ON userinfo.user_id=records.created_by "
+                    + "INNER JOIN (SELECT base_id AS B, max(created_on) AS C FROM "
+                    + "records AS R GROUP BY R.base_id ) AS M ON base_id=M.B AND "
+                    + "created_on=M.C WHERE patient_id=? ORDER BY record_id DESC LIMIT ?"
                     );
 
             PS.setInt(1, userId);
             PS.setInt(2, numberOfRecords);
             
             results = PS.executeQuery();
-            if (results.next()) {
+            while (results.next()) {
                 result.add(new Record(results));
             }
 
