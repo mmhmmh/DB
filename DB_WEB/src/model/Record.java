@@ -4,6 +4,8 @@
  */
 package model;
 
+import java.sql.ResultSet;
+
 /**
  *
  * @author Mark
@@ -18,7 +20,29 @@ public class Record {
     String diagnosis;
     String prescriptions;
     String schedulingOfTreatment;
+    int base_id;
 
+    public Record(ResultSet results) throws Exception {
+        recordId = results.getInt("record_id");
+        appointmentId = results.getInt("appointment_id");
+        visitStart = (results.getTimestamp("visit_start")).getTime();
+        visitEnd = (results.getTimestamp("visit_end")).getTime();
+        createdBy = results.getInt("created_by");
+        doctorId = results.getInt("doctor_id");
+        diagnosis = results.getString("diagnosis");
+        prescriptions = results.getString("prescriptions");
+        schedulingOfTreatment = results.getString("scheduling_of_treatment");
+        base_id = results.getInt("base_id");           
+    }
+
+    public int getBase_id() {
+        return base_id;
+    }
+
+    public void setBase_id(int base_id) {
+        this.base_id = base_id;
+    }
+    
     public int getAppointmentId() {
         return appointmentId;
     }
