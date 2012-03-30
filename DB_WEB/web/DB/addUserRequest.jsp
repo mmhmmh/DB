@@ -14,6 +14,8 @@
     String rpassword = request.getParameter("rpassword");
 
 
+
+
     if (fName == "" || lName == "" || role == "" || email == "" || password == "" || rpassword == "") {
         //invalid input
         response.sendRedirect("addUser.jsp");
