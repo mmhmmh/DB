@@ -24,7 +24,8 @@ public class UserManager {
         try {
             connection = DB.ConnectToDatabase();
             PS = connection.prepareStatement(
-                    "INSERT INTO users(email, password) values (?, ?)");
+                    "INSERT INTO users(email, password) values (?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
+
             PS.setString(1, email);
             PS.setString(2, password);
             PS.execute();
@@ -36,7 +37,7 @@ public class UserManager {
             }
 
             PS = connection.prepareStatement(
-                    "INSERT INTO userinfo(user_id, first_name, last_name, role_id, user_status) values (?, '?', '?', ?, '?')");
+                    "INSERT INTO userinfo(user_id, first_name, last_name, role_id, user_status) values (?, ?, ?, ?, ?)");
             PS.setInt(1,key);
             PS.setString(2,fName);
             PS.setString(3,lName);

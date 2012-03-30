@@ -30,5 +30,6 @@
         UserManager.addUser(fName, lName, role, email, password);
     }
 
-
+    response.sendRedirect("addUser.jsp");
+    return;
 %>
