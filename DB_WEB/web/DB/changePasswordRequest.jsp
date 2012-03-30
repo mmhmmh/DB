@@ -15,9 +15,16 @@
     if (newpassword != repassword)
     {
         //error password mismatch 
-        response.sendRedirect("login.jsp");
+        response.sendRedirect("changePassword.jsp");
     }
     
-    
+    if(LoginHelper.updatePassword(username, oldpassword, newpassword)){
+        //success
+        response.sendRedirect("changePassword.jsp");
+        
+    }else{
+        //failed
+        response.sendRedirect("changePassword.jsp");
+    }
     
 %>
