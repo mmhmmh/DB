@@ -8,6 +8,9 @@
     String username = request.getParameter("username");
     String password = request.getParameter("password");
 
+    int userid = LoginHelper.getUserId(username);
+    
+    
     if (username == null || password == null) {
         response.sendRedirect("login.jsp");
     }
@@ -25,6 +28,7 @@
             response.sendRedirect("../finance/index.jsp");
         }
         session.setAttribute("username", username);
+        session.setAttribute("userid", new Integer(userid));
     } else {
         session.setAttribute("error", "Invalid password and/or username");
         response.sendRedirect("login.jsp");

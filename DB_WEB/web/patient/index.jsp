@@ -4,6 +4,12 @@
     Author     : Administrator
 --%>
 
+<%@page import="java.util.Date"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="com.sun.java.swing.plaf.windows.WindowsBorders.DashedBorder"%>
+<%@page import="java.text.DateFormat"%>
+<%@page import="model.Appointment"%>
+<%@page import="helpers.AppointmentHelper"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -12,11 +18,21 @@
         <title>Patient Page</title>
     </head>
     <body>
-        
-        <%
-        String myname =  (String)session.getAttribute("username");
-        %>
 
+        <%
+
+            String myname = (String) session.getAttribute("username");
+            int userid = ((Integer) session.getAttribute("userid")).intValue();
+            Appointment a = AppointmentHelper.getNextAppointment(userid).get(0);
+            String doctname = Integer.toString(a.getDoctorId());
+
+            
+            DateFormat format = new SimpleDateFormat("MM/dd/YYYY HH:mm");
+            String timestart = format.format(new Date(a.getStartTime()));
+            
+            String timeend = format.format(new Date(a.getEndTime()));
+       %>
+        
         <table>
             <tr>
                 <td>
@@ -32,10 +48,12 @@
 
                     <table border="1">
                         <tr border="1">
-                            <td>Doctor Name</td> <td>Appointment Time</td><td>Duratin</td>
+                            <td>Doctor Name</td> <td>Appointment Time</td><td>End Time</td>
                         </tr>
                         <tr>
-                            <td>zhima</td> <td>10:00 am</td> <td>1 h</td>
+
+                            <td><%=doctname%></td> <td><%=timestart%></td> <td><%=timeend%></td>
+
 
                         </tr>
                     </table>
@@ -51,11 +69,11 @@
 
                     <table border="1">
                         <tr>
-                            <td>Record ID</td><td>Doctor Name</td><td>Appointment Time</td><td>Prescription</td>
+                            <td>Record ID</td><td>Doctor Name</td><td>Appointment Time</td><td>Prescription</td><td>Diagnoses</td>
 
                         </tr>
                         <tr>
-                            <td>a</td><td>a</td><td>a</td><td>a</td>
+                            <td>a</td><td>a</td><td>a</td><td>a</td><td>a</td>
 
                         </tr>
 
@@ -65,7 +83,17 @@
 
                 </td>
 
-            <tr align="right"><td><a href="">more</a></td></tr>
+            <tr >
+
+                <td align="right">
+                    <a href="">All Record</a>
+                    <a href="">Search Record</a>
+
+                </td>
+
+            </tr>
+
+
 
 
         </tr>
