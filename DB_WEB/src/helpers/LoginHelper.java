@@ -14,6 +14,11 @@ import java.sql.ResultSet;
  * @author Mark
  */
 public class LoginHelper {
+    
+    public static int getUserId(String email) {
+        return 0;
+    }
+    
     public static boolean validPassword(String email, String password) {
         boolean isValid = false;
         
