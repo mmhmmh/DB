@@ -41,7 +41,7 @@ public class UserManager {
             PS.setInt(1,key);
             PS.setString(2,fName);
             PS.setString(3,lName);
-            PS.setInt(4,1);
+            PS.setInt(4,role);
             PS.setString(5,"active");
             PS.execute();
             success = true;
