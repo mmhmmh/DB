@@ -32,10 +32,10 @@
                     <td> Role: </td>
                     <td>
                         <select name="role"> 
-                            <option>Patient</option>
-                            <option>Doctor</option>
-                            <option>Staff</option>
-                            <option>Finance</option>
+                            <option value="1">Patient</option>
+                            <option value="2">Doctor</option>
+                            <option value="3">Staff</option>
+                            <option value="4">Finance</option>
                         </select> 
                     </td> 
 
