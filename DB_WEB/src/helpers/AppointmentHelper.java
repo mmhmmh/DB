@@ -104,6 +104,44 @@ public class AppointmentHelper {
         return result;
     }
     
+    public static void updateAppointment(Appointment appointment) {
+        
+        Connection connection = null;
+        PreparedStatement PS = null;
+        Boolean success = false;
+        String error = "Error in ReadWriteExample.read()";
+
+        try {
+            connection = DB.ConnectToDatabase();
+            PS = connection.prepareStatement(
+                    "UPDATE appointments SET patient_id=?, staff_id=?, doctor_id=?, appointment_start=?, appointment_end=? WHERE appointment_id=?");
+            PS.setInt(1, appointment.getPatientId());
+                        PS.setInt(2, appointment.getStaffId());
+            PS.setInt(3, appointment.getDoctorId());
+            PS.setTimestamp(4, new Timestamp(appointment.getStartTime()));
+            PS.setTimestamp(5, new Timestamp(appointment.getEndTime()));
+            PS.setInt(6, appointment.getAppointmentId());
+            PS.execute();
+            success = true;
+        } catch (Exception e) {
+            System.out.println(error);
+            System.err.println(e.toString());
+        } finally {
+            try {
+                PS.close();
+            } catch (Exception e) {
+                System.out.println(error);
+                System.err.println(e.toString());
+            }
+            try {
+                connection.close();
+            } catch (Exception e) {
+                System.out.println(error);
+                System.err.println(e.toString());
+            }
+        }
+    }
+    
     public static void addAppointment(Appointment appointment) {
         Connection connection = null;
         PreparedStatement PS = null;

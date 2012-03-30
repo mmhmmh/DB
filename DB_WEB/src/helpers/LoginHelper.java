@@ -32,7 +32,7 @@ public class LoginHelper {
             
             results = PS.executeQuery();
             if (results.next()) {
-                results.getInt("user_id");
+                userId = results.getInt("user_id");
             }
 
         } catch (Exception e) {
