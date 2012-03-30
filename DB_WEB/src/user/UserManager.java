@@ -15,7 +15,7 @@ import java.sql.ResultSet;
  */
 public class UserManager {
 
-    public static void addUser(String fName, String lName, String role, String email, String password) {
+    public static void addUser(String fName, String lName, int role, String email, String password) {
         Connection connection = null;
         PreparedStatement PS = null;
         Boolean success = false;

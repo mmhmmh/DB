@@ -9,9 +9,31 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Patient Page</title>
     </head>
     <body>
+        <table>
+            <tr>
+                <td>
+                    <a href="../DB/myAccount.jsp">My Account</a>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Next Appointment:</td>
+                   
+            </tr>
+
+            <tr>
+                <td></td>
+                <td></td>
+            </tr>
+
+
+        </table>
+
+
+
         <h1>Hello World!</h1>
     </body>
 </html>

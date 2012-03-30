@@ -8,7 +8,7 @@
 
     String fName = request.getParameter("fname");
     String lName = request.getParameter("lname");
-    String role = request.getParameter("role");
+    int role = Integer.parseInt( request.getParameter("role"));
     String email = request.getParameter("username");
     String password = request.getParameter("password");
     String rpassword = request.getParameter("rpassword");
