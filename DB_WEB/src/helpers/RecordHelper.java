@@ -36,7 +36,7 @@ public class RecordHelper {
             PS.setInt(1, userId);
             
             results = PS.executeQuery();
-            if (results.next()) {
+            while (results.next()) {
                 result.add(new Record(results));
             }
 
@@ -79,7 +79,7 @@ public class RecordHelper {
             PS.setInt(2, numberOfRecords);
             
             results = PS.executeQuery();
-            if (results.next()) {
+            while (results.next()) {
                 result.add(new Record(results));
             }
 
