@@ -11,10 +11,22 @@
     String role = request.getParameter("role");
     String email = request.getParameter("username");
     String password = request.getParameter("password");
-    String rPassword = request.getParameter("rpassword");
+    String rpassword = request.getParameter("rpassword");
 
-    
-    UserManager.addUser(fName,lName,role,email,password,rPassword);
-    
-    
+
+    if (fName == "" || lName == "" || role == "" || email == "" || password == "" || rpassword == "") {
+        //invalid input
+        response.sendRedirect("addUser.jsp");
+        return;
+    }
+
+
+    if (!password.equals(rpassword)) {
+        //password mismatch
+    } else {
+        //success
+        UserManager.addUser(fName, lName, role, email, password);
+    }
+
+
 %>
