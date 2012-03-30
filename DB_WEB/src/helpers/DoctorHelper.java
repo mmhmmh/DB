@@ -29,7 +29,7 @@ public class DoctorHelper {
             PS = connection.prepareStatement(
                     "select user_id, first_name, last_name, "
                     + "email from users natural join userinfo "
-                    + "natural join roles where role_name='Doctor' AND email=?");
+                    + "natural join roles where role_name='Doctor' AND user_id=?");
 
             PS.setInt(1, doctorId);
             results = PS.executeQuery();
