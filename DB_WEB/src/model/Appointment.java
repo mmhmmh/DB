@@ -4,6 +4,8 @@
  */
 package model;
 
+import java.sql.ResultSet;
+
 /**
  *
  * @author Mark
@@ -16,6 +18,16 @@ public class Appointment {
     long startTime;
     long endTime;
     String appiontmentStatus;
+
+    public Appointment(ResultSet results) throws Exception {
+        appointmentId = results.getInt("appointment_id");
+        patientId = results.getInt("patient_id");
+        staffId = results.getInt("staff_id");
+        doctorId = results.getInt("doctor_id");
+        startTime = results.getTimestamp("appointment_start").getTime();
+        endTime = results.getTimestamp("appointment_end").getTime();
+        appiontmentStatus = results.getString("appointment_status");
+    }
 
     public void setAppiontmentStatus(String appiontmentStatus) {
         this.appiontmentStatus = appiontmentStatus;
