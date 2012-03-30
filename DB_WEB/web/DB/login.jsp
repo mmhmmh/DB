@@ -18,7 +18,7 @@
             <form action="checkLogin.jsp">
                 <table>
                     <tr>
-                        <td> Username  : </td><td> <input name="username" size=15 type="text" /> </td> 
+                        <td> Email  : </td><td> <input name="username" size=15 type="text" /> </td> 
                     </tr>
                     <tr>
                         <td> Password  : </td><td> <input name="password" size=15 type="password" /> </td> 
