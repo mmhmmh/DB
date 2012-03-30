@@ -4,6 +4,7 @@
     Author     : Administrator
 --%>
 
+<%@page import="helpers.RecordHelper"%>
 <%@page import="helpers.DoctorHelper"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
@@ -24,7 +25,7 @@
 
             String myname = (String) session.getAttribute("username");
             int userid = ((Integer) session.getAttribute("userid")).intValue();
-            userid = 7;
+
             Appointment a = AppointmentHelper.getNextAppointment(userid);
             
             
@@ -36,6 +37,10 @@
             String timestart = format.format(new Date(a.getStartTime()));
 
             String timeend = format.format(new Date(a.getEndTime()));
+            
+            
+            
+            
         %>
 
         <table>
@@ -74,7 +79,11 @@
 
                         </tr>
                         <tr>
+                            
+                            
+                            
                             <td>a</td><td>a</td><td>a</td><td>a</td><td>a</td>
+                             
 
                         </tr>
                     </table>
