@@ -12,9 +12,37 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Account Page</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <h3>Account Information</h3>
+        
+        <table>
+        
+        	<tr>
+        		<td>First Name:</td><td>xxx</td>
+        	</tr>
+        	
+        	<tr>
+        		<td>Last Name:</td><td>xxx</td>
+        	</tr>
+        	        	<tr>
+        		<td>Email:</td><td>xxx</td>
+        	</tr>
+        	</tr>
+        	<tr>
+        		<td>Phone #:</td><td>xxx</td>
+        	</tr>
+        	
+        	<tr>
+        		<td>Role:</td><td>xxx</td>
+        	</tr>
+        	
+
+        </table>
+        <br>
+        
+        <a href="editAccount.jsp">Edit Account Info</a>
+        
     </body>
 </html>

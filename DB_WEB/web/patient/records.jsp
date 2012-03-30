@@ -18,26 +18,13 @@
         <table border="1">
         	
         	<tr>
-        		<td>Record ID</td><td>Doctor Name</td><td>Appointment Time</td><td>Prescription</td><td>Diagnoses</td>
+                    <td>Record ID</td><td>Doctor Name</td><td>Appointment Time</td><td>Prescription</td><td>Diagnoses</td>
         	</tr>
         	
         	<tr>
-        		<td>a</td><td>a</td><td>a</td><td><p>a</p></td><td>a</td>
+                    <td>a</td><td>a</td><td>a</td><td><p>a</p></td><td>a</td>
         	</tr>
-        
-        	<tr>
-        		<td>a</td><td>a</td><td>a</td><td><p>a</p></td><td>a</td>
-        	</tr>
-        
-        	<tr>
-        		<td>a</td><td>a</td><td>a</td><td><p>a</p></td><td>a</td>
-        	</tr>
-        
-        
-        
-        
-        
-        </table>
+          </table>
         
     </body>
 </html>

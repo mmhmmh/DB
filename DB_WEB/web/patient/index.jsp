@@ -4,6 +4,7 @@
     Author     : Administrator
 --%>
 
+<%@page import="helpers.DoctorHelper"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="com.sun.java.swing.plaf.windows.WindowsBorders.DashedBorder"%>
@@ -28,7 +29,7 @@
             
             
             int doctid =  a.getDoctorId();
-            String doctname = "sdf";
+            String doctname = DoctorHelper.getName(doctid);
             
             
             DateFormat format = new SimpleDateFormat("MM/dd/YYYY HH:mm");
@@ -43,7 +44,6 @@
                     <a href="../DB/myAccount.jsp">My Account</a>
                     <br>
                     <br>
-
                 </td>
             </tr>
 
@@ -55,10 +55,7 @@
                             <td>Doctor Name</td> <td>Appointment Time</td><td>End Time</td>
                         </tr>
                         <tr>
-
                             <td><%=doctname%></td> <td><%=timestart%></td> <td><%=timeend%></td>
-
-
                         </tr>
                     </table>
 
@@ -90,8 +87,6 @@
                     <a href="">Search Record</a>
                 </td>
             </tr>
-
-
 
 
         </tr>
