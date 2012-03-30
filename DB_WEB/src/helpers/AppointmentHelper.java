@@ -16,7 +16,7 @@ public class AppointmentHelper {
         return null;
     }
     
-    public static List<Appointment> getNextAppointment(int userId) {
+    public static Appointment getNextAppointment(int userId) {
         return null;
     }
 }
