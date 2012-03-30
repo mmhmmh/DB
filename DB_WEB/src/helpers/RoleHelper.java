@@ -19,6 +19,6 @@ public class RoleHelper {
         Unknown
     }
     public static Role getUserRole(String username) {
-        return Role.Unknown;
+        return Role.Patient;
     }
 }

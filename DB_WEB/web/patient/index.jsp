@@ -23,16 +23,20 @@
 
             String myname = (String) session.getAttribute("username");
             int userid = ((Integer) session.getAttribute("userid")).intValue();
-            Appointment a = AppointmentHelper.getNextAppointment(userid).get(0);
-            String doctname = Integer.toString(a.getDoctorId());
-
+            userid = 7;
+            Appointment a = AppointmentHelper.getNextAppointment(userid);
+            
+            
+            int doctid =  a.getDoctorId();
+            String doctname = "sdf";
+            
             
             DateFormat format = new SimpleDateFormat("MM/dd/YYYY HH:mm");
             String timestart = format.format(new Date(a.getStartTime()));
-            
+
             String timeend = format.format(new Date(a.getEndTime()));
-       %>
-        
+        %>
+
         <table>
             <tr>
                 <td>
@@ -76,11 +80,7 @@
                             <td>a</td><td>a</td><td>a</td><td>a</td><td>a</td>
 
                         </tr>
-
-
-
                     </table>
-
                 </td>
 
             <tr >
@@ -88,9 +88,7 @@
                 <td align="right">
                     <a href="">All Record</a>
                     <a href="">Search Record</a>
-
                 </td>
-
             </tr>
 
 

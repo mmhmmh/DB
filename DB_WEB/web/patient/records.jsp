@@ -1,6 +1,6 @@
 <%-- 
-    Document   : records
-    Created on : Mar 30, 2012, 2:04:06 PM
+    Document   : recordsearch
+    Created on : Mar 30, 2012, 2:04:32 PM
     Author     : Administrator
 --%>
 
@@ -9,9 +9,35 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Record Page</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <h3>Full Record History</h3>
+        
+        
+        <table border="1">
+        	
+        	<tr>
+        		<td>Record ID</td><td>Doctor Name</td><td>Appointment Time</td><td>Prescription</td><td>Diagnoses</td>
+        	</tr>
+        	
+        	<tr>
+        		<td>a</td><td>a</td><td>a</td><td><p>a</p></td><td>a</td>
+        	</tr>
+        
+        	<tr>
+        		<td>a</td><td>a</td><td>a</td><td><p>a</p></td><td>a</td>
+        	</tr>
+        
+        	<tr>
+        		<td>a</td><td>a</td><td>a</td><td><p>a</p></td><td>a</td>
+        	</tr>
+        
+        
+        
+        
+        
+        </table>
+        
     </body>
 </html>

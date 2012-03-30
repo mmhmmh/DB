@@ -16,7 +16,7 @@
 
 
 
-    if (fName == "" || lName == "" || role == "" || email == "" || password == "" || rpassword == "") {
+    if (fName == "" || lName == ""  || email == "" || password == "" || rpassword == "") {
         //invalid input
         response.sendRedirect("addUser.jsp");
         return;
