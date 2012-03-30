@@ -55,6 +55,43 @@ public class LoginHelper {
         return userId;
     }
     
+    public static boolean updatePassword(String email, String oldPassword, String newPassword) {
+        if (validPassword(email, oldPassword)) {
+            Connection connection = null;
+            PreparedStatement PS = null;
+            Boolean success = false;
+            String error = "Error in LoginHelper.updatePassword()";
+
+            try {
+                connection = DB.ConnectToDatabase();
+                PS = connection.prepareStatement(
+                        "UPDATE users SET password=? WHERE email=?");
+                PS.setString(1, newPassword);
+                PS.setString(2, email);
+                PS.execute();
+                success = true;
+            } catch (Exception e) {
+                System.out.println(error);
+                System.err.println(e.toString());
+            } finally {
+                try {
+                    PS.close();
+                } catch (Exception e) {
+                    System.out.println(error);
+                    System.err.println(e.toString());
+                }
+                try {
+                    connection.close();
+                } catch (Exception e) {
+                    System.out.println(error);
+                    System.err.println(e.toString());
+                }
+            } 
+           return true;
+        }
+        return false;
+    }
+    
     public static boolean validPassword(String email, String password) {
         boolean isValid = false;
         
