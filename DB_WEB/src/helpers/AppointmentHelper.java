@@ -30,11 +30,12 @@ public class AppointmentHelper {
             PS = connection.prepareStatement(
                     "SELECT * FROM appointments INNER JOIN userinfo "
                     + "ON appointments.doctor_id=userinfo.user_id WHERE "
-                    + "appointment_status=? AND patient_id=? ORDER BY "
+                    + "appointment_status=? AND (patient_id=? OR doctor_id=?) ORDER BY "
                     + "appointment_start ASC");
 
             PS.setString(1, "scheduled");
             PS.setInt(2, userId);
+            PS.setInt(3, userId);
             
             results = PS.executeQuery();
             if (results.next()) {

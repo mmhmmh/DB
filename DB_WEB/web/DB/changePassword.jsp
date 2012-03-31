@@ -29,7 +29,7 @@
 
 
         	<tr>
-        		<td>New Password:</td><td><input type="text" name="newrepassword" type="password"/></td>
+        		<td>New Password:</td><td><input type="text" name="newpassword" type="password"/></td>
         	</tr>
         	
         	<tr>

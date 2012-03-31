@@ -1,10 +1,7 @@
 <%-- 
-    Document   : patientHome
-    Created on : 28-Mar-2012, 1:21:15 PM
-    Author     : Michael
-
-    Purpose:  Starting page for patient, recent visit history, appointment time
-    User: Patient
+    Document   : index
+    Created on : Mar 31, 2012, 9:24:28 AM
+    Author     : Administrator
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
