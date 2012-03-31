@@ -38,11 +38,13 @@
         
         AppointmentHelper.addAppointment(a);
         
+        session.setAttribute("Success", "Appointment Created Successfully");
         response.sendRedirect("newAppointment.jsp");
         return;
 
     } catch (Exception e) {
         //error parsing date
+        session.setAttribute("Error", "Appointment Creation Failled");
         response.sendRedirect("newAppointment.jsp");
         return;
     }

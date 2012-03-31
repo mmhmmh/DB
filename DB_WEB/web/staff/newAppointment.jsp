@@ -51,9 +51,11 @@
         
     
     	<h2>Create New Appointment</h2>
+        
+        <%@include file="/helper/ResultDisplay.jsp" %>
     	<br>
     	
-    	
+
     	<form action="newAppointmentRequest.jsp">
         
         <table>
