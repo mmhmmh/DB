@@ -8,6 +8,7 @@ import db.DB;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
 import java.util.LinkedList;
 import java.util.List;
 import model.Record;
@@ -151,6 +152,53 @@ public class RecordHelper {
         }
         return result;
         
+    }
+    
+    public static void saveRecord(Record r) {
+        Connection connection = null;
+        PreparedStatement PS = null;
+        Boolean success = false;
+        String error = "Error in RecordHelper.saveRecord()";
+
+        try {
+            connection = DB.ConnectToDatabase();
+            PS = connection.prepareStatement(
+                    "INSERT INTO records (appointment_id, visit_start, "
+                    + "visit_end, diagnosis, prescriptions, "
+                    + "scheduling_of_treatment, base_id, created_by) "
+                    + "VALUES (?,?,?,?,?,?,?,?)");
+            PS.setInt(1, r.getAppointmentId());
+            PS.setTimestamp(2, new Timestamp(r.getVisitStart()));
+            PS.setTimestamp(3, new Timestamp(r.getVisitEnd()));
+            PS.setString(4, r.getDiagnosis());
+            PS.setString(5, r.getPrescriptions());
+            PS.setString(6, r.getSchedulingOfTreatment());
+            if (r.getBase_id() == 0) {
+                PS.setNull(7, java.sql.Types.INTEGER);
+            } else {
+                PS.setInt(7, r.getBase_id());
+            }
+            PS.setInt(8, r.getCreatedBy());
+            
+            PS.execute();
+            success = true;
+        } catch (Exception e) {
+            System.out.println(error);
+            System.err.println(e.toString());
+        } finally {
+            try {
+                PS.close();
+            } catch (Exception e) {
+                System.out.println(error);
+                System.err.println(e.toString());
+            }
+            try {
+                connection.close();
+            } catch (Exception e) {
+                System.out.println(error);
+                System.err.println(e.toString());
+            }
+        }
     }
     
 }

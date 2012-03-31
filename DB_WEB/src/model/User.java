@@ -13,10 +13,25 @@ import java.sql.ResultSet;
 public class User {
     int id;
     String username;
+    String password;
+
+    public User() {
+        
+    }
+    
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public User(ResultSet results) throws Exception{
         id = results.getInt("user_id");
         username = results.getString("email");
+        //String tmp = results.getString("password");
+        //password = tmp == null ? "" : tmp;
     }
 
     public int getId() {

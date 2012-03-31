@@ -32,7 +32,7 @@ public class Record {
         diagnosis = results.getString("diagnosis");
         prescriptions = results.getString("prescriptions");
         schedulingOfTreatment = results.getString("scheduling_of_treatment");
-        base_id = results.getInt("base_id");           
+        base_id = results.getInt("base_id");
     }
 
     public int getBase_id() {
