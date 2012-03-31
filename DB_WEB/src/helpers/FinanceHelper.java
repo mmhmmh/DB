@@ -34,11 +34,10 @@ public class FinanceHelper {
         try {
             connection = DB.ConnectToDatabase();
             PS = connection.prepareStatement(
-                    "SELECT COUNT(appointment_id) AS c, patient_id "
-                    + "FROM appointments INNER JOIN userinfo "
-                    + "ON user_id=doctor_id WHERE doctor_id=? AND "
+                    "SELECT patient_id, count(appointment_id) AS c FROM "
+                    + "appointments WHERE doctor_id=? AND "
                     + "appointment_status='finished' AND appointment_start>? "
-                    + "AND appointment_start<?");
+                    + "AND appointment_start<? GROUP BY patient_id");
 
             PS.setInt(1, doctorId);
             PS.setTimestamp(2, new Timestamp(appStart.getTime()));

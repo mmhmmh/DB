@@ -96,21 +96,20 @@ if (patient_id == null) {
             
             int recordId;
 
-            for (int i=0;i<recordList.size();i++)
-            {
+            for (int i = 0; i < recordList.size(); i++) {
                 Record r = recordList.get(i);
-                
-                
+
+
                 recordId = r.getRecordId();
                 doctorName = DoctorHelper.getName(r.getDoctorId());
-                
+
                 String visitstart = format.format(new Date(r.getVisitStart()));
                 String visitend = format.format(new Date(r.getVisitEnd()));
-                
-                
-                String tmpRecord= String.format("<tr><td>%s</td><td>%d</td><td>&s</td><td>&s</td><td>%s</td><td>%s</td></tr>"
-                        ,doctorName,recordId,visitstart,visitend,r.getDiagnosis(),r.getPrescriptions());
-                
+
+
+                String tmpRecord = String.format("<tr><td>%s</td><td>%d</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><tr>"
+                        , r.getRecordId(), r.getAppointmentId(),visitstart, visitend, r.getDiagnosis(), r.getPrescriptions(),r.getSchedulingOfTreatment());
+
                 recordContent = recordContent + tmpRecord;
             }    
 %>
@@ -119,8 +118,8 @@ if (patient_id == null) {
     
         <table border="1">
         	<tr>
-                    <td>Record ID</td><td>Doctor Name</td><td>Visit Start</td>
-                    <td>Visit End</td><td>Prescription</td><td>Diagnoses</td>
+                    <th>Record ID</th><th>Appointment ID</th><th>Visit Start</th>
+                    <th>Visit End</th><th>Prescription</th><th>Diagnoses</th><th>Schedule of Treatment</th>
         	</tr>
         	
                 <%=recordContent%>
