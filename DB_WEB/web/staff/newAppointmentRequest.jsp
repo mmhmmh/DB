@@ -44,7 +44,7 @@
 
     } catch (Exception e) {
         //error parsing date
-        session.setAttribute("Error", "Appointment Creation Failled");
+        session.setAttribute("Error", "Appointment Creation Failed");
         response.sendRedirect("newAppointment.jsp");
         return;
     }

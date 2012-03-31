@@ -4,45 +4,71 @@
     Author     : Administrator
 --%>
 
+<%@page import="java.util.Date"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.text.DateFormat"%>
+<%@page import="helpers.UserHelper"%>
+<%@page import="model.UserWithInfo"%>
+<%@page import="com.sun.org.apache.bcel.internal.generic.ALOAD"%>
 <%@page import="java.util.List"%>
 <%@page import="model.Appointment"%>
 <%@page import="helpers.AppointmentHelper"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-    </head>
-    <body>
+<%@include file="/helper/Header.jsp"%>
         <%
             int doctorId = ((Integer) session.getAttribute("userid")).intValue();
 
-            List<Appointment> a = AppointmentHelper.getFutureAppointments(doctorId);
+            List<Appointment> al = AppointmentHelper.getFutureAppointments(doctorId);
 
-            String appointmentListContent = "<select name=\"appointmentlist\" >";
-            for (int i = 0; i < a.size() ; i++) {
-                appointmentListContent=appointmentListContent
-                        + String.format("<option>%d</option>",a.get(i).getAppointmentId());
+            String appointmentListContent = "";
+            String actionLink;
+            Appointment a;
+            UserWithInfo u;
+            for (int i = 0; i < al.size(); i++) {
+                a = al.get(i);
+
+                u = UserHelper.findUserWithInfo(a.getDoctorId());
+                String docName = u.getfName() + ' ' + u.getlName();
+
+                u = UserHelper.findUserWithInfo(a.getStaffId());
+                String staffName = u.getfName() + ' ' + u.getlName();
+
+                u = UserHelper.findUserWithInfo(a.getPatientId());
+                String patName = u.getfName() + ' ' + u.getlName();
+
+                DateFormat format = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+                String timestart = format.format(new Date(a.getStartTime()));
+                String timeend = format.format(new Date(a.getEndTime()));
+
+                actionLink = String.format("<a href=\"newRecord.jsp?appointmentlist=%d\">Start Visit</a>", i);
+
+
+                appointmentListContent = appointmentListContent
+                        + String.format("<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>",
+                        a.getAppointmentId(), docName, patName, staffName, timestart, timeend, actionLink);
             }
-            appointmentListContent = appointmentListContent + "</select>";
 
-            session.setAttribute("appointment", a);
+            session.setAttribute("appointmentlist", al);
         %>
+
+        <%@include file="/helper/ResultDisplay.jsp" %>
+
         <h3>Future Appointment</h3>
-        <form action="newRecord.jsp">
-            <table>
+
+        <table border="1">
+            <thead>
                 <tr>
-                    <td>Appointment ID:</td>
-                    <td><%=appointmentListContent%></td>
-                    <td><input type="submit" value="Start Appointment" /></td>
+                    <th>ID</th><th>Doctor</th><th>Patient</th><th>Staff</th> <th>Appointment Start</th><th>Appointment End</th><th>Action</th>
                 </tr>
-            </table>
-        </form>
-                    
-                    
-                    
+            </thead>
+            <tbody>
+                <%=appointmentListContent%>
+            </tbody>
+            <tr>
 
-
-    </body>
-</html>
+            </tr>
+        </table>
+                
+                
+                
+<%@include file="/helper/Footer.jsp" %>

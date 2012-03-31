@@ -115,13 +115,14 @@ public class AppointmentHelper {
         try {
             connection = DB.ConnectToDatabase();
             PS = connection.prepareStatement(
-                    "UPDATE appointments SET patient_id=?, staff_id=?, doctor_id=?, appointment_start=?, appointment_end=? WHERE appointment_id=?");
+                    "UPDATE appointments SET patient_id=?, staff_id=?, doctor_id=?, appointment_start=?, appointment_end=?, appointment_status=? WHERE appointment_id=?");
             PS.setInt(1, appointment.getPatientId());
-                        PS.setInt(2, appointment.getStaffId());
+            PS.setInt(2, appointment.getStaffId());
             PS.setInt(3, appointment.getDoctorId());
             PS.setTimestamp(4, new Timestamp(appointment.getStartTime()));
             PS.setTimestamp(5, new Timestamp(appointment.getEndTime()));
-            PS.setInt(6, appointment.getAppointmentId());
+            PS.setString(6, appointment.getAppiontmentStatus());
+            PS.setInt(7, appointment.getAppointmentId());
             PS.execute();
             success = true;
         } catch (Exception e) {
