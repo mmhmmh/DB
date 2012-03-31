@@ -15,6 +15,9 @@
         else 
             {
             %>
+            
+            <%@include file="/helper/ResultDisplay.jsp" %>
+            
             <form action="checkLogin.jsp">
                 <table>
                     <tr>

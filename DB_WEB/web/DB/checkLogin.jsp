@@ -12,6 +12,7 @@
     
     
     if (username == null || password == null) {
+        session.setAttribute("Error", "Invalid password and/or username");
         response.sendRedirect("login.jsp");
     }
 
@@ -30,7 +31,7 @@
         session.setAttribute("username", username);
         session.setAttribute("userid", new Integer(userid));
     } else {
-        session.setAttribute("error", "Invalid password and/or username");
+        session.setAttribute("Error", "Invalid password and/or username");
         response.sendRedirect("login.jsp");
     }
 
