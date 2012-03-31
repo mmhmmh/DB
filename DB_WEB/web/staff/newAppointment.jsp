@@ -11,14 +11,8 @@
 <%@page import="java.util.List"%>
 <%@page import="model.User"%>
 <%@page import="helpers.DoctorHelper"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>New Appointment Page</title>
-    </head>
-    <body>
+<%@include file="/helper/Header.jsp"%>
+
         
         
 <%
@@ -91,5 +85,4 @@
         </form>
         
         
-    </body>
-</html>
+<%@include file="/helper/Footer.jsp" %>
