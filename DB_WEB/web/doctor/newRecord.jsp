@@ -21,16 +21,15 @@
         <%
             int doctorId = ((Integer) session.getAttribute("userid")).intValue();
             Appointment a = (Appointment)session.getAttribute("appointment");
-            
-            
-            DateFormat format = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+
             
             Date visitStart =new Date();
-            
-            session.setAttribute("visitstart", "");
+            session.setAttribute("visitstart", visitStart.getTime());
 
         %>
 
+        <%@include file="/helper/ResultDisplay.jsp" %>
+        
         	<h1>New Record</h1>
 			<br>
 			<h3>Appointment Information</h3>
@@ -56,9 +55,9 @@
         <form action="newRecordRequest.jsp" method="POST">
         
         
-        		Diagnoses:
+        		Diagnosis:
         		<br>
-        	    <textarea name="diagnoses" rows="8" cols="60"></textarea>
+        	    <textarea name="diagnosis" rows="8" cols="60"></textarea>
                 <br>
                 <br>
         

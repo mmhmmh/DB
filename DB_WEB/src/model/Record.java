@@ -22,6 +22,10 @@ public class Record {
     String schedulingOfTreatment;
     int base_id;
 
+    public Record(){
+        
+    }
+    
     public Record(ResultSet results) throws Exception {
         recordId = results.getInt("record_id");
         appointmentId = results.getInt("appointment_id");
