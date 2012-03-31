@@ -216,7 +216,7 @@ public class PatientHelper {
             connection = DB.ConnectToDatabase();
             PS = connection.prepareStatement(
                     "SELECT * FROM users NATURAL JOIN userinfo "
-                    + "NATURAL JOIN patientinfoINNER JOIN "
+                    + "NATURAL JOIN patientinfo INNER JOIN "
                     + "patienthealth ON patienthealth.health_card="
                     + "patientinfo.health_card INNER JOIN sininfo ON "
                     + "sininfo.social_insurance=patientinfo.social_insurance "

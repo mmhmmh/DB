@@ -14,7 +14,6 @@
 <%@page import="helpers.AppointmentHelper"%>
 <%@include file="/helper/Header.jsp"%>
 
-
         <%
 
             String myname = (String) session.getAttribute("username");

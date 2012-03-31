@@ -15,7 +15,7 @@ String username = (String)session.getAttribute("username");
 if (username != null && !username.equals("")) {
 %>
 <div style="float:right">
-Welcome <%=username%>! <a>Logout</a></div>
+    Welcome <%=username%>! <a href="../DB/logout.jsp">Logout</a></div>
 <%
 }
 %>    
