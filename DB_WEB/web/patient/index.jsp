@@ -6,11 +6,15 @@
 
 <%@page import="helpers.RecordHelper"%>
 <%@page import="helpers.DoctorHelper"%>
+<%@page import="helpers.UserHelper"%>
+<%@page import="model.Record"%>
+<%@page import="model.UserWithInfo"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="com.sun.java.swing.plaf.windows.WindowsBorders.DashedBorder"%>
 <%@page import="java.text.DateFormat"%>
 <%@page import="model.Appointment"%>
+<%@page import="java.util.*"%>
 <%@page import="helpers.AppointmentHelper"%>
 <%@include file="/helper/Header.jsp"%>
 
@@ -20,9 +24,11 @@
             int userid = ((Integer) session.getAttribute("userid")).intValue();
 
             String appContent = "";
+            String recordList = "";
 
             Appointment a = AppointmentHelper.getNextAppointment(userid);
-
+            List<Record> rcd= RecordHelper.getRecentRecords(userid, 10);
+            
 
             if (a == null) {
                 appContent = "Not future appointment not avialable";
@@ -31,7 +37,6 @@
 
                 int doctid = a.getDoctorId();
                 String doctname = DoctorHelper.getName(doctid);
-
 
                 DateFormat format = new SimpleDateFormat("MM/dd/yyyy HH:mm");
                 String timestart = format.format(new Date(a.getStartTime()));
@@ -47,53 +52,63 @@
 
         %>
 
-        <table>
-            <tr>
-                <td>
-                    <a href="../DB/myAccount.jsp">My Account</a>
-                    <br>
-                    <br>
-                </td>
-            </tr>
+        
+            <a href="../DB/myAccount.jsp">My Account</a>
+ 
+                <h3> Next Appointment:</h3>
+                <text><%=appContent%></text>
 
-            <tr>
-                <td><h3> Next Appointment:</h3>
 
-                            <%=appContent%>
-
-                </td>
-
-            </tr>
-
-            <tr>
-                <td>
-                    <br>
                     <h3>Record History</h3>
 
                     <table border="1">
                         <tr>
-                            <td>Record ID</td><td>Doctor Name</td><td>Appointment Time</td><td>Prescription</td><td>Diagnoses</td>
-
+                            <th>Record ID</th>
+                            <th>Doctor Name</th>
+                            <th>Time of Visit</th>
+                            <th>Prescription</th>
+                            <th>Diagnoses</th>
                         </tr>
+                        <% 
+                            if (rcd.isEmpty()){
+                        %>
+                        <tr><td>no records</td></tr>
+                        <%
+                            }else{
+                                String diag = "";
+                                String prescriptions ="";
+                                int recordId = 0;
+                                String visitstart = "";
+                                String docname="";
+                                
+                                for (Record record : rcd){
+                                     diag = record.getDiagnosis();
+                                     prescriptions = record.getPrescriptions();
+                                     recordId = record.getRecordId();
+                                    
+                                    DateFormat format = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+                                     visitstart = format.format(new Date(record.getVisitStart()));
+                                    
+                                    int doctorId = record.getDoctorId();
+                                    UserWithInfo doctor = UserHelper.findUserWithInfo(doctorId);
+                                     docname = doctor.getfName() + " " + doctor.getlName();
+                        %>
                         <tr>
-
-
-
-                            <td>a</td><td>a</td><td>a</td><td>a</td><td>a</td>
-
-
+                            <td><%=recordId%></td>
+                            <td><%=docname%></td>
+                            <td><%=visitstart%></td>
+                            <td><%=prescriptions%></td>
+                            <td><%=diag%></td>
                         </tr>
+                                    
+                        <%
+                                }
+                            }
+                        %>
+
+                        
                     </table>
-                </td>
-
-            <tr>
-
-                <td align="right">
                     <a href="records.jsp">All Record</a>
                     <a href="">Search Record</a>
-                </td>
-            </tr>
-
-    </table>
 
 <%@include file="/helper/Footer.jsp" %>
