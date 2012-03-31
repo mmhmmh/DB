@@ -1,17 +1,38 @@
-<%-- 
-    Document   : index
-    Created on : Mar 31, 2012, 9:24:28 AM
-    Author     : Administrator
---%>
+<%@page import="model.User"%>
+<%@page import="java.util.List"%>
+<%@page import="helpers.DoctorHelper"%>
+<%@include file="/helper/Header.jsp"%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-    </head>
-    <body>
-        <h1>Hello World!</h1>
-    </body>
-</html>
+<div>Doctor List</div>
+
+
+<%
+List<User> doctorList = DoctorHelper.getAllDoctors();
+%>
+
+<div> 
+    <table>
+        <thead>
+            <tr>
+                <th>Doctor Name</th>
+                <th>Doctor ID</th>
+                <th>&nbsp;</th>
+            </tr>
+        </thead>
+        
+        <tbody>
+            <% 
+            for(User u : doctorList) { 
+            %>
+            <tr>
+                <td><%=u.getUsername()%></td>
+                <td><%=u.getId()%></td>
+                <td><a href="searchDoctorDetail.jsp?doctor_id=<%=u.getId()%>">search</a></td>
+            </tr>
+            <% } %>
+        </tbody>
+            
+    </table>
+</div>
+
+<%@include file="/helper/Footer.jsp" %>
