@@ -4,16 +4,10 @@
     Author     : Administrator
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-    </head>
-    <body>
+<%@include file="/helper/Header.jsp"%>
+
         <h1>Hello World!</h1>
         
         <a href="newAppointment.jsp">New Appointment</a>
-    </body>
-</html>
+
+        <%@include file="/helper/Footer.jsp" %>
