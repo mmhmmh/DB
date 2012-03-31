@@ -24,7 +24,7 @@ public class PatientInfo {
     public PatientInfo(ResultSet rs) throws Exception {
         userId = rs.getInt("user_id");
         phone = rs.getString("phone");
-        healthCard = rs.getInt("health");
+        healthCard = rs.getInt("health_card");
         isActive = rs.getInt("is_active");
         socialInsurance = rs.getInt("social_insurance");
     }

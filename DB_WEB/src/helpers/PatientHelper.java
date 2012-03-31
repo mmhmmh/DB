@@ -205,4 +205,47 @@ public class PatientHelper {
         }
     }
     
+    public static Patient getPatientById(int patientId) {
+        Connection connection = null;
+        ResultSet results;
+        PreparedStatement PS = null;
+        String error = "Error in WriteExample.writeExample";
+        Patient result = null;
+       
+        try {
+            connection = DB.ConnectToDatabase();
+            PS = connection.prepareStatement(
+                    "SELECT * FROM users NATURAL JOIN userinfo "
+                    + "NATURAL JOIN patientinfo INNER JOIN "
+                    + "patienthealth ON patienthealth.health_card="
+                    + "patientinfo.health_card INNER JOIN sininfo ON "
+                    + "sininfo.social_insurance=patientinfo.social_insurance "
+                    + "WHERE user_id=?");
+
+            PS.setInt(1, patientId);
+            results = PS.executeQuery();
+            if (results.next()) {
+                result = new Patient(results);
+            }
+
+        } catch (Exception e) {
+            System.out.println(error);
+            System.err.println(e.toString());
+        } finally {
+            try {
+                PS.close();
+            } catch (Exception e) {
+                System.out.println(error);
+                System.err.println(e.toString());
+            }
+            try {
+                connection.close();
+            } catch (Exception e) {
+                System.out.println(error);
+                System.err.println(e.toString());
+            }
+        }
+        return result;
+    }
+    
 }
