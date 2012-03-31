@@ -18,6 +18,10 @@ public class Appointment {
     long startTime;
     long endTime;
     String appiontmentStatus;
+    
+    public Appointment() {
+        
+    }
 
     public Appointment(ResultSet results) throws Exception {
         appointmentId = results.getInt("appointment_id");
