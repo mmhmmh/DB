@@ -106,6 +106,48 @@ public class RecordHelper {
         return result;
     }
     
+    public static List<Record> getRecordeRevisionByBaseId(int baseId) {
+        Connection connection = null;
+        ResultSet results;
+        PreparedStatement PS = null;
+        String error = "Error in RecordHelper.getRecentRecords";
+        List<Record> result = new LinkedList<Record>();
+
+        try {
+            connection = DB.ConnectToDatabase();
+            PS = connection.prepareStatement("SELECT * FROM records NATURAL "
+                    + "JOIN appointments WHERE doctor_id=? AND "
+                    + "(record_id=? OR base_id=?);"
+                    );
+
+            PS.setInt(1, baseId);
+            PS.setInt(2, baseId);
+            
+            results = PS.executeQuery();
+            while (results.next()) {
+                result.add(new Record(results));
+            }
+
+        } catch (Exception e) {
+            System.out.println(error);
+            System.err.println(e.toString());
+        } finally {
+            try {
+                PS.close();
+            } catch (Exception e) {
+                System.out.println(error);
+                System.err.println(e.toString());
+            }
+            try {
+                connection.close();
+            } catch (Exception e) {
+                System.out.println(error);
+                System.err.println(e.toString());
+            }
+        }
+        return result;
+    }
+    
     public static Record getRecordById(int recordId) {
         
        Connection connection = null;
@@ -153,6 +195,7 @@ public class RecordHelper {
         return result;
         
     }
+    
     
     public static void saveRecord(Record r) {
         Connection connection = null;

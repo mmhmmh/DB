@@ -79,4 +79,42 @@ public class UserHelper {
         }
         return key;
     }
+    
+    public static UserWithInfo findUserWithInfo(int userId) {
+        Connection connection = null;
+        ResultSet results;
+        PreparedStatement PS = null;
+        String error = "Error in WriteExample.findUserWithInfo";
+        UserWithInfo result = null;
+
+        try {
+            connection = DB.ConnectToDatabase();
+            PS = connection.prepareStatement(
+                     "SELECT * FROM userinfo NATURAL JOIN users WHERE user_id=?");
+
+            PS.setInt(1, userId);
+            results = PS.executeQuery();
+            if (results.next()) {
+                result = new UserWithInfo(results);
+            }
+
+        } catch (Exception e) {
+            System.out.println(error);
+            System.err.println(e.toString());
+        } finally {
+            try {
+                PS.close();
+            } catch (Exception e) {
+                System.out.println(error);
+                System.err.println(e.toString());
+            }
+            try {
+                connection.close();
+            } catch (Exception e) {
+                System.out.println(error);
+                System.err.println(e.toString());
+            }
+        }
+        return result;
+    }
 }
