@@ -12,15 +12,8 @@
 <%@page import="model.Record"%>
 <%@page import="java.util.List"%>
 <%@page import="helpers.RecordHelper"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Record Page</title>
-    </head>
-    <body>
-        
+<%@include file="/helper/Header.jsp"%>
+
         <%
             int userId = ((Integer)session.getAttribute("userid")).intValue();
             List<Record> recordList = RecordHelper.getAllRecords(userId);
@@ -67,5 +60,4 @@
         	</tr>
           </table>
         
-    </body>
-</html>
+<%@include file="/helper/Footer.jsp" %>

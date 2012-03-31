@@ -12,14 +12,8 @@
 <%@page import="java.text.DateFormat"%>
 <%@page import="model.Appointment"%>
 <%@page import="helpers.AppointmentHelper"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Patient Page</title>
-    </head>
-    <body>
+<%@include file="/helper/Header.jsp"%>
+
 
         <%
 
@@ -93,7 +87,7 @@
                     </table>
                 </td>
 
-            <tr >
+            <tr>
 
                 <td align="right">
                     <a href="records.jsp">All Record</a>
@@ -101,14 +95,6 @@
                 </td>
             </tr>
 
-
-        </tr>
-
-
     </table>
 
-
-
-
-</body>
-</html>
+<%@include file="/helper/Footer.jsp" %>
