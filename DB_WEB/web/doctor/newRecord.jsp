@@ -6,23 +6,13 @@
 <%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.text.DateFormat"%>
-<!-- 
-    Document   : newRecord
-    Created on : Mar 31, 2012, 9:17:48 AM
-    Author     : Administrator
--->
-
 <%@page import="java.util.List"%>
 <%@page import="model.Appointment"%>
 <%@page import="helpers.AppointmentHelper"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>New Record Page</title>
-    </head>
-    <body>
+<%@include file="/helper/Header.jsp"%>
+
+<%@include file="/doctor/sublinks.jsp"%>
+
         <%
             int doctorId = ((Integer) session.getAttribute("userid")).intValue();
             
@@ -32,8 +22,8 @@
             Appointment a = al.get(appId);
             
             //update appointmet;
-            a.setAppiontmentStatus("started");
-            AppointmentHelper.updateAppointment(a);
+            //a.setAppiontmentStatus("started");
+            //AppointmentHelper.updateAppointment(a);
             
             session.setAttribute("appointment", a);
             
@@ -113,6 +103,4 @@
             <input type="submit"/>
 
         </form>
-
-    </body>
-</html>
+<%@include file="/helper/Footer.jsp" %>
