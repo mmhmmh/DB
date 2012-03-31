@@ -38,7 +38,7 @@ public class AppointmentHelper {
             PS.setInt(3, userId);
             
             results = PS.executeQuery();
-            if (results.next()) {
+            while (results.next()) {
                 result.add(new Appointment(results));
             }
 
