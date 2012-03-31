@@ -22,6 +22,20 @@ public class RoleHelper {
         Unknown
     }
     
+    public static Role getRoleFromInt(int key) {
+        Role result = Role.Unknown;
+        if (key == 1) {
+            result = Role.Patient;
+        } else if (key == 2) {
+            result = Role.Doctor;
+        } else if (key == 3) {
+            result = Role.Staff;
+        } else if (key == 4) {
+            result = Role.Finance;
+        }
+        return result;
+    }
+    
     public static Role getUserRole(String username) {
         Connection connection = null;
         ResultSet results;
@@ -38,15 +52,7 @@ public class RoleHelper {
             results = PS.executeQuery();
             if (results.next()) {
                 int key = results.getInt("role_id");
-                if (key == 1) {
-                    result = Role.Patient;
-                } else if (key == 2) {
-                    result = Role.Doctor;
-                } else if (key == 3) {
-                    result = Role.Staff;
-                } else if (key == 4) {
-                    result = Role.Finance;
-                }
+                result = getRoleFromInt(key);
             } 
 
         } catch (Exception e) {
