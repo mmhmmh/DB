@@ -58,7 +58,7 @@
 
 <br>
 
-<input type="button" value="New Appointmen" onClick="location.href='newAppointment.jsp'">
+<input type="button" value="New Appointment" onClick="location.href='newAppointment.jsp'">
 
 <br>
 <br>
