@@ -19,6 +19,7 @@ import model.UserWithInfo;
  * @author Mark
  */
 public class DoctorHelper {
+
     public static String getName(int doctorId) {
         Connection connection = null;
         ResultSet results;
@@ -58,7 +59,7 @@ public class DoctorHelper {
         }
         return result;
     }
-    
+
     public static List<User> getAllDoctors() {
         Connection connection = null;
         ResultSet results;
@@ -98,9 +99,9 @@ public class DoctorHelper {
         }
         return result;
     }
-    
+
     public static List<UserWithInfo> getAllPatientsForDoctor(int doctorId) {
-        
+
         Connection connection = null;
         ResultSet results;
         PreparedStatement PS = null;
@@ -110,13 +111,67 @@ public class DoctorHelper {
         try {
             connection = DB.ConnectToDatabase();
             PS = connection.prepareStatement(
-                  "SELECT * FROM userinfo NATURAL JOIN "
-                + "(SELECT user_id FROM patientinfo WHERE "
-                + "default_doctor=? UNION SELECT user_id "
-                + "FROM doctorpatient WHERE doctor_id=?) as allpatients");
+                    "SELECT * FROM userinfo NATURAL JOIN "
+                    + "(SELECT user_id FROM patientinfo WHERE "
+                    + "default_doctor=? UNION SELECT user_id "
+                    + "FROM doctorpatient WHERE doctor_id=?) as allpatients");
 
             PS.setInt(1, doctorId);
             PS.setInt(2, doctorId);
+            results = PS.executeQuery();
+            while (results.next()) {
+                result.add(new UserWithInfo(results));
+            }
+
+        } catch (Exception e) {
+            System.out.println(error);
+            System.err.println(e.toString());
+        } finally {
+            try {
+                PS.close();
+            } catch (Exception e) {
+                System.out.println(error);
+                System.err.println(e.toString());
+            }
+            try {
+                connection.close();
+            } catch (Exception e) {
+                System.out.println(error);
+                System.err.println(e.toString());
+            }
+        }
+        return result;
+    }
+
+    public static List<UserWithInfo> findAllPatientsByDoctorAndSearch(int doctorId, String keyword) {
+        Connection connection = null;
+        ResultSet results;
+        PreparedStatement PS = null;
+        String error = "Error in WriteExample.writeExample";
+        List<UserWithInfo> result = new LinkedList<UserWithInfo>();
+
+        try {
+            connection = DB.ConnectToDatabase();
+            PS = connection.prepareStatement(
+                    "SELECT * FROM userinfo NATURAL JOIN "
+                    + "(SELECT user_id FROM patientinfo WHERE "
+                    + "default_doctor='?' UNION SELECT user_id FROM "
+                    + "doctorpatient WHERE doctor_id='?') AS "
+                    + "allpatients NATURAL JOIN users INNER JOIN "
+                    + "(SELECT * FROM appointments WHERE appointment_"
+                    + "status='finished' GROUP BY patient_id "
+                    + "HAVING max(appointment_start)) AS latestappointments "
+                    + "ON latestappointments.patient_id=allpatients.user_id "
+                    + "WHERE email like '%?%' "
+                    + "OR first_name like '%?%' OR last_name like '%?%' "
+                    + "OR appointment_start like '%?%'");
+
+            PS.setInt(1, doctorId);
+            PS.setInt(2, doctorId);
+            PS.setString(3, keyword);
+            PS.setString(4, keyword);
+            PS.setString(5, keyword);
+            PS.setString(6, keyword);
             results = PS.executeQuery();
             while (results.next()) {
                 result.add(new UserWithInfo(results));
