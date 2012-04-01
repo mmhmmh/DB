@@ -18,6 +18,7 @@ import model.Appointment;
  * @author Mark
  */
 public class AppointmentHelper {
+
     public static List<Appointment> getFutureAppointments(int userId) {
         Connection connection = null;
         ResultSet results;
@@ -36,7 +37,7 @@ public class AppointmentHelper {
             PS.setString(1, "scheduled");
             PS.setInt(2, userId);
             PS.setInt(3, userId);
-            
+
             results = PS.executeQuery();
             while (results.next()) {
                 result.add(new Appointment(results));
@@ -61,7 +62,49 @@ public class AppointmentHelper {
         }
         return result;
     }
-    
+
+    public static List<Appointment> getAllFutureAppointments() {
+        Connection connection = null;
+        ResultSet results;
+        PreparedStatement PS = null;
+        String error = "Error in AppointmentHelper.getFutureAppointments";
+        List<Appointment> result = new LinkedList<Appointment>();
+
+        try {
+            connection = DB.ConnectToDatabase();
+            PS = connection.prepareStatement(
+                    "SELECT * FROM appointments INNER JOIN userinfo "
+                    + "ON appointments.doctor_id=userinfo.user_id WHERE "
+                    + "appointment_status=? ORDER BY "
+                    + "appointment_start ASC");
+
+            PS.setString(1, "scheduled");
+
+            results = PS.executeQuery();
+            while (results.next()) {
+                result.add(new Appointment(results));
+            }
+
+        } catch (Exception e) {
+            System.out.println(error);
+            System.err.println(e.toString());
+        } finally {
+            try {
+                PS.close();
+            } catch (Exception e) {
+                System.out.println(error);
+                System.err.println(e.toString());
+            }
+            try {
+                connection.close();
+            } catch (Exception e) {
+                System.out.println(error);
+                System.err.println(e.toString());
+            }
+        }
+        return result;
+    }
+
     public static Appointment getNextAppointment(int userId) {
         Connection connection = null;
         ResultSet results;
@@ -79,7 +122,7 @@ public class AppointmentHelper {
 
             PS.setString(1, "scheduled");
             PS.setInt(2, userId);
-            
+
             results = PS.executeQuery();
             if (results.next()) {
                 result = new Appointment(results);
@@ -104,9 +147,9 @@ public class AppointmentHelper {
         }
         return result;
     }
-    
+
     public static void updateAppointment(Appointment appointment) {
-        
+
         Connection connection = null;
         PreparedStatement PS = null;
         Boolean success = false;
@@ -143,7 +186,7 @@ public class AppointmentHelper {
             }
         }
     }
-    
+
     public static void addAppointment(Appointment appointment) {
         Connection connection = null;
         PreparedStatement PS = null;
@@ -159,7 +202,7 @@ public class AppointmentHelper {
             PS.setInt(3, appointment.getStaffId());
             PS.setTimestamp(4, new Timestamp(appointment.getStartTime()));
             PS.setTimestamp(5, new Timestamp(appointment.getEndTime()));
-            PS.setString(6,appointment.getAppiontmentStatus());
+            PS.setString(6, appointment.getAppiontmentStatus());
             PS.execute();
             success = true;
         } catch (Exception e) {

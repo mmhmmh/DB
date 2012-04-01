@@ -67,9 +67,6 @@
             <tbody>
                 <%=appInfoContent%>
             </tbody>
-            <tr>
-
-            </tr>
         </table>
 
         <br>
