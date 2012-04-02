@@ -254,8 +254,8 @@ public class RecordHelper {
             PS = connection.prepareStatement(
                     "INSERT INTO records (appointment_id, visit_start, "
                     + "visit_end, diagnosis, prescriptions, "
-                    + "scheduling_of_treatment, base_id, created_by) "
-                    + "VALUES (?,?,?,?,?,?,?,?)");
+                    + "scheduling_of_treatment, base_id, created_by,comment) "
+                    + "VALUES (?,?,?,?,?,?,?,?,?)");
             PS.setInt(1, r.getAppointmentId());
             PS.setTimestamp(2, new Timestamp(r.getVisitStart()));
             PS.setTimestamp(3, new Timestamp(r.getVisitEnd()));
@@ -268,6 +268,8 @@ public class RecordHelper {
                 PS.setInt(7, r.getBase_id());
             }
             PS.setInt(8, r.getCreatedBy());
+            PS.setString(9, r.getComment());
+            
 
             PS.execute();
             success = true;
