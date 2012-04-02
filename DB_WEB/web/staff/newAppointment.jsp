@@ -1,33 +1,34 @@
-<%-- 
-    Document   : newAppointment
-    Created on : 28-Mar-2012, 2:05:00 PM
-    Author     : Michael
-
-    Purpose:  make an appointment
-    User: Staff
---%>
-
 <%@page import="helpers.PatientHelper"%>
-<%@page import="java.util.List"%>
-<%@page import="model.User"%>
 <%@page import="helpers.DoctorHelper"%>
+<%@page import="java.util.Date"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.text.DateFormat"%>
+<%@page import="helpers.UserHelper"%>
+<%@page import="model.UserWithInfo"%>
+<%@page import="model.Appointment"%>
+<%@page import="java.util.List"%>
+<%@page import="helpers.AppointmentHelper"%>
+
 <%@include file="/helper/Header.jsp"%>
-<%@include file="/staff/sublinks.jsp"%>    
+
+<%@include file="/staff/sublinks.jsp"%>
+
+
 
 <%
-    List<User> docList = DoctorHelper.getAllDoctors();
-    List<User> patList = PatientHelper.getAllPatients();
+    int staffId = ((Integer) session.getAttribute("userid")).intValue();
+    int doctorId = Integer.parseInt(request.getParameter("doclist"));
 
-    String docListContent;
-    String patListContent;
+    List<UserWithInfo> patList = DoctorHelper.getAllPatientsForDoctor(doctorId);
+    
+    
+    Appointment a=new Appointment();
+    a.setDoctorId(doctorId);
+    
+    session.setAttribute("appointment", a);
+    
 
-    docListContent = "<select name=\"doclist\">";
-    for (int i = 0; i < docList.size(); i++) {
-        docListContent = docListContent
-                + String.format("<option value=\"%d\">%s</option>",
-                docList.get(i).getId(), docList.get(i).getUsername());
-    }
-    docListContent = docListContent + "</select>";
+    String patListContent = "";
 
 
     patListContent = "<select name=\"patlist\">";
@@ -39,11 +40,38 @@
     patListContent = patListContent + "</select>";
 
 
+    UserWithInfo u;
 
+
+
+    u = UserHelper.findUserWithInfo(doctorId);
+    String doctor = u.getUsername();
+
+
+    DateFormat format = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+    String timestart = format.format(new Date());
+    String timeend = format.format(new Date());
+
+    boolean[] timeSlot = AppointmentHelper.getAvailableTime(doctorId, (new Date()).getTime(), (new Date()).getTime());
+    String timeSlotContent = "";
+
+    String s[] = new String[4];
+    for (int i = 0; i < timeSlot.length; i = i + 4) {
+
+        for (int j = 0; j < 4; j++) {
+
+            s[j] = (timeSlot[i + j]) ? "<td bgcolor=\"#00FF00\">A</td>" : "<td bgcolor=\"#FF0000\">O</td>";
+
+        }
+
+        timeSlotContent = timeSlotContent + String.format(
+                "<tr><td>%d</td>%s%s%s%s</tr>",
+                i / 4, s[0], s[1], s[2], s[3]);
+    }
 %>
 
 
-<h2>Create New Appointment</h2>
+<h1> New Appointment </h1>
 
 <%@include file="/helper/ResultDisplay.jsp" %>
 <br>
@@ -56,22 +84,23 @@
         <tr>
             <td>Patient:</td>
             <td><%=patListContent%></td>
-            <td><a href="../staff/editPatient.jsp">Add Patient</a> </td>
+            <td><a href="/staff/editPatient.jsp">Add Patient</a> </td>
         </tr>
 
         <tr>
             <td>Doctor:</td>
-            <td><%=docListContent%></td>
+            <td><%=doctor%></td>
+             <td><a href="/staff/selectDoctor.jsp">Change Doctor</a> </td>
         </tr>
 
         <tr>
-            <td>Appointment Start:</td> <td><input type="text" name="appstart"></td> <td>( mm/dd/yyyy hh:mm )</td>
+            <td>Appointment Start:</td> <td><input type="text" name="appstart" value="<%=timestart%>"></td> <td>( mm/dd/yyyy hh:mm )</td>
 
         </tr>
 
 
         <tr>
-            <td>Appointment End:</td> <td><input type="text" name="append"> </td> <td>( mm/dd/yyyy hh:mm )</td>
+            <td>Appointment End:</td> <td><input type="text" name="append" value="<%=timeend%>"> </td> <td>( mm/dd/yyyy hh:mm )</td>
         </tr>        
 
     </table>
@@ -83,5 +112,20 @@
 
 </form>
 
+<h3>Available Time Slots</h3>
+A = Avaliable<br>
+O = Occupied<br>
+<table border="1">
+    <thead>
+        <tr>
+            <th>Hour</th><th>0 Min</th><th>15 Min</th><th>30 Min</th><th>45 Min</th>
+        </tr>
+    </thead>
+    <tbody>
+        <%=timeSlotContent%>
+    </tbody>
+
+
+</table>
 
 <%@include file="/helper/Footer.jsp" %>

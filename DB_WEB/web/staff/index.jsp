@@ -57,8 +57,7 @@
 <%@include file="/helper/ResultDisplay.jsp" %>
 
 <br>
-
-<input type="button" value="New Appointment" onClick="location.href='newAppointment.jsp'">
+<input type="button" value="Create Appointment" onClick="location.href='selectDoctor.jsp'">
 
 <br>
 <br>

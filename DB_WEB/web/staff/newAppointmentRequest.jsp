@@ -13,9 +13,9 @@
 <%
     int staffId = ((Integer) session.getAttribute("userid")).intValue();
     int patientId = Integer.parseInt(request.getParameter("patlist"));
-    int doctorId = Integer.parseInt(request.getParameter("doclist"));
+    //int doctorId = Integer.parseInt(request.getParameter("doclist"));
 
-
+    Appointment a =  (Appointment) session.getAttribute("appointment");
 
     DateFormat format = new SimpleDateFormat("MM/dd/yyyy HH:mm");
 
@@ -27,10 +27,10 @@
         appStart = format.parse(request.getParameter("appstart"));
         appEnd = format.parse(request.getParameter("append"));
 
-        Appointment a = new Appointment();
+        
 
         a.setAppiontmentStatus( "scheduled");
-        a.setDoctorId(doctorId);
+        //a.setDoctorId(doctorId);
         a.setStaffId(staffId);
         a.setPatientId(patientId);
         a.setStartTime(appStart.getTime());
@@ -39,13 +39,13 @@
         AppointmentHelper.addAppointment(a);
         
         session.setAttribute("Success", "Appointment Created Successfully");
-        response.sendRedirect("newAppointment.jsp");
+        response.sendRedirect(String.format("newAppointment.jsp?doclist=%d",a.getDoctorId()));
         return;
 
     } catch (Exception e) {
         //error parsing date
         session.setAttribute("Error", "Appointment Creation Failed");
-        response.sendRedirect("newAppointment.jsp");
+        response.sendRedirect(String.format("newAppointment.jsp?doclist=%d",a.getDoctorId()));
         return;
     }
 

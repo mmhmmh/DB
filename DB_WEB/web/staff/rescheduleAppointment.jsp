@@ -100,7 +100,7 @@
     <input type="submit" value="Reschedule"/>
 
 </form>
-        <br>
+      
 <h3>Available Time Slots</h3>
 A = Avaliable<br>
 O = Occupied<br>
@@ -116,6 +116,5 @@ O = Occupied<br>
     
     
 </table>
-
 
 <%@include file="/helper/Footer.jsp" %>
