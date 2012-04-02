@@ -97,7 +97,8 @@
             <br>
             <br>
 
-            <input type="submit"/>
-
+            <input type="submit"  name="submit" value="Submit">
+            <INPUT type="button" value="Cancel" onClick="location.href='/doctor/index.jsp'">
         </form>
+
 <%@include file="/helper/Footer.jsp" %>

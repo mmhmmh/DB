@@ -111,7 +111,7 @@ public class DoctorHelper {
         try {
             connection = DB.ConnectToDatabase();
             PS = connection.prepareStatement(
-                    "SELECT * FROM userinfo NATURAL JOIN "
+                    "SELECT * FROM userinfo NATURAL JOIN users NATURAL JOIN "
                     + "(SELECT user_id FROM patientinfo WHERE "
                     + "default_doctor=? UNION SELECT user_id "
                     + "FROM doctorpatient WHERE doctor_id=?) as allpatients");
@@ -155,23 +155,22 @@ public class DoctorHelper {
             PS = connection.prepareStatement(
                     "SELECT * FROM userinfo NATURAL JOIN "
                     + "(SELECT user_id FROM patientinfo WHERE "
-                    + "default_doctor='?' UNION SELECT user_id FROM "
-                    + "doctorpatient WHERE doctor_id='?') AS "
-                    + "allpatients NATURAL JOIN users INNER JOIN "
+                    + "default_doctor=? UNION SELECT user_id FROM "
+                    + "doctorpatient WHERE doctor_id=?) AS "
+                    + "allpatients NATURAL JOIN users LEFT JOIN "
                     + "(SELECT * FROM appointments WHERE appointment_"
                     + "status='finished' GROUP BY patient_id "
                     + "HAVING max(appointment_start)) AS latestappointments "
                     + "ON latestappointments.patient_id=allpatients.user_id "
-                    + "WHERE email like '%?%' "
-                    + "OR first_name like '%?%' OR last_name like '%?%' "
-                    + "OR appointment_start like '%?%'");
+                    + "WHERE email like '%" + keyword 
+                    + "%' OR first_name like '%" + keyword 
+                    + "%' OR last_name like '%" + keyword 
+                    + "%' OR appointment_start like '%" + keyword
+                    + "%' OR user_id=?");
 
             PS.setInt(1, doctorId);
             PS.setInt(2, doctorId);
             PS.setString(3, keyword);
-            PS.setString(4, keyword);
-            PS.setString(5, keyword);
-            PS.setString(6, keyword);
             results = PS.executeQuery();
             while (results.next()) {
                 result.add(new UserWithInfo(results));
