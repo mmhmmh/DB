@@ -16,6 +16,9 @@
 <%
     int appointmentid = Integer.parseInt(request.getParameter("appointmentid"));
 
+    Appointment ca = (Appointment) session.getAttribute("conflictappointment");
+    session.setAttribute("conflictappointment", null);
+
     List<Appointment> al = AppointmentHelper.getAllFutureAppointments();
     Appointment a = new Appointment();
     for (int i = 0; i < al.size(); i++) {
@@ -26,38 +29,51 @@
             break;
         }
     }
-    
+
     session.setAttribute("appointment", a);
-    
+
     UserWithInfo u;
-    
+
     u = UserHelper.findUserWithInfo(a.getPatientId());
     String patient = u.getfName() + " " + u.getlName();
-    
+
     u = UserHelper.findUserWithInfo(a.getDoctorId());
     String doctor = u.getfName() + " " + u.getlName();
-    
-    
+
+
     DateFormat format = new SimpleDateFormat("MM/dd/yyyy HH:mm");
     String timestart = format.format(new Date(a.getStartTime()));
-    
+
     String timeend = format.format(new Date(a.getEndTime()));
 
-    boolean [] timeSlot = AppointmentHelper.getAvailableTime(a.getDoctorId(), a.getStartTime(), a.getEndTime());
-    String timeSlotContent="";
+    boolean[] timeSlot = AppointmentHelper.getAvailableTime(a.getDoctorId(), a.getStartTime(), a.getEndTime());
+
+    DateFormat dateformat = new SimpleDateFormat("MM/dd/yyyy");
+    String slotDateContent = dateformat.format(a.getStartTime());
     
-    String s [] = new String[4];
-    for (int i=0;i<timeSlot.length;i=i+4){
+    if (ca != null) {
+        timestart = format.format(ca.getStartTime());
+        timeend = format.format(ca.getEndTime());
+        slotDateContent = dateformat.format(ca.getStartTime());
+        timeSlot = AppointmentHelper.getAvailableTime(ca.getDoctorId(), ca.getStartTime(), ca.getEndTime());
+    }
 
-      for (int j=0;j<4;j++){
 
-         s[j]=(timeSlot[i+j])?"<td bgcolor=\"#00FF00\">A</td>":"<td bgcolor=\"#FF0000\">O</td>";
-          
-      }
-        
-      timeSlotContent = timeSlotContent + String.format(
-              "<tr><td>%d</td>%s%s%s%s</tr>", 
-              i/4,s[0],s[1],s[2],s[3]);
+
+    String timeSlotContent = "";
+
+    String s[] = new String[4];
+    for (int i = 0; i < timeSlot.length; i = i + 4) {
+
+        for (int j = 0; j < 4; j++) {
+
+            s[j] = (timeSlot[i + j]) ? "<td bgcolor=\"#00FF00\">A</td>" : "<td bgcolor=\"#FF0000\">O</td>";
+
+        }
+
+        timeSlotContent = timeSlotContent + String.format(
+                "<tr><td>%d</td>%s%s%s%s</tr>",
+                i / 4, s[0], s[1], s[2], s[3]);
     }
 %>
 
@@ -100,21 +116,23 @@
     <input type="submit" value="Reschedule"/>
 
 </form>
-      
+
 <h3>Available Time Slots</h3>
 A = Avaliable<br>
 O = Occupied<br>
+<br>
+<%=slotDateContent%>
 <table border="1">
     <thead>
-    <tr>
-        <th>Hour</th><th>0 Min</th><th>15 Min</th><th>30 Min</th><th>45 Min</th>
-    </tr>
+        <tr>
+            <th>Hour</th><th>0 Min</th><th>15 Min</th><th>30 Min</th><th>45 Min</th>
+        </tr>
     </thead>
     <tbody>
         <%=timeSlotContent%>
     </tbody>
-    
-    
+
+
 </table>
 
 <%@include file="/helper/Footer.jsp" %>

@@ -35,6 +35,15 @@
         a.setPatientId(patientId);
         a.setStartTime(appStart.getTime());
         a.setEndTime(appEnd.getTime());
+       
+        if (AppointmentHelper.hasConflict(a.getDoctorId(), a.getStartTime(), a.getEndTime())){
+            session.setAttribute("Error", "Time Conflict");
+            session.setAttribute("conflictappointment",a);
+            response.sendRedirect(String.format("newAppointment.jsp?doclist=%d",a.getDoctorId()));
+            return;
+        }
+        
+            
         
         AppointmentHelper.addAppointment(a);
         

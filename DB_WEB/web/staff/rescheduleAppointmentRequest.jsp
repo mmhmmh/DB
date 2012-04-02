@@ -19,22 +19,29 @@
         appStart = format.parse(request.getParameter("appstart"));
         appEnd = format.parse(request.getParameter("append"));
 
-        a.setAppiontmentStatus( "scheduled");
+        a.setAppiontmentStatus("scheduled");
         a.setStartTime(appStart.getTime());
         a.setEndTime(appEnd.getTime());
-        
-        AppointmentHelper.getAvailableTime(a.getDoctorId(), a.getStartTime(), a.getEndTime());
-        
+
+        if (AppointmentHelper.hasConflict(a.getDoctorId(), a.getStartTime(), a.getEndTime())) {
+            session.setAttribute("Error", "Time Conflict");
+            session.setAttribute("conflictappointment", a);
+            response.sendRedirect(String.format("rescheduleAppointment.jsp?appointmentid=%d", a.getDoctorId()));
+            return;
+        }
+
+
+
         AppointmentHelper.updateAppointment(a);
-        
+
         session.setAttribute("Success", "Appointment Updated Successfully");
-        response.sendRedirect(String.format("rescheduleAppointment.jsp?appointmentid=%d",a.getAppointmentId()));
+        response.sendRedirect(String.format("rescheduleAppointment.jsp?appointmentid=%d", a.getAppointmentId()));
         return;
 
     } catch (Exception e) {
         //error parsing date
         session.setAttribute("Error", "Appointment Update Failed");
-        response.sendRedirect(String.format("rescheduleAppointment.jsp?appointmentid=%d",a.getAppointmentId()));
+        response.sendRedirect(String.format("rescheduleAppointment.jsp?appointmentid=%d", a.getAppointmentId()));
         return;
     }
 

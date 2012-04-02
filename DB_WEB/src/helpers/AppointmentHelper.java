@@ -226,49 +226,68 @@ public class AppointmentHelper {
             }
         }
     }
-    
-    public static boolean [] getAvailableTime(int doctorID, long timeStart, long timeEnd){
-        
+
+    public static boolean[] getAvailableTime(int doctorID, long timeStart, long timeEnd) {
+
         List<Appointment> al = getFutureAppointments(doctorID);
-        
-        boolean [] timeSlots = new boolean [24*4];
-        
-        for (int i =0;i<24*4;i++){
-            timeSlots[i]=true;
+
+        boolean[] timeSlots = new boolean[24 * 4];
+
+        for (int i = 0; i < 24 * 4; i++) {
+            timeSlots[i] = true;
         }
-        
+
         Calendar calStart = Calendar.getInstance();
         Calendar calEnd = Calendar.getInstance();
         Calendar calTmpStart = Calendar.getInstance();
-        Calendar calTmpEnd= Calendar.getInstance();
-        
+        Calendar calTmpEnd = Calendar.getInstance();
+
         calStart.setTime(new Date(timeStart));
         calEnd.setTime(new Date(timeEnd));
-        
-        
+
+
         Appointment a;
-        for (int i=0;i<al.size();i++){
-            
+        for (int i = 0; i < al.size(); i++) {
+
             a = al.get(i);
-            
+
             calTmpStart.setTime(new Date(a.getStartTime()));
             calTmpEnd.setTime(new Date(a.getEndTime()));
 
-            if (calTmpStart.get(Calendar.DATE) == calStart.get(Calendar.DATE)){ //same day as the appintment
-                int slotStart = calTmpStart.get(Calendar.HOUR_OF_DAY)*4 + calTmpStart.get(Calendar.MINUTE)/15;
-                int slotEnd = calTmpEnd.get(Calendar.HOUR_OF_DAY)*4 + calTmpEnd.get(Calendar.MINUTE)/15;
-                
-                for (int j=slotStart;j<slotEnd+1;j++){
-                    timeSlots[j]=false;
+            if (calTmpStart.get(Calendar.DATE) == calStart.get(Calendar.DATE)) { //same day as the appintment
+                int slotStart = calTmpStart.get(Calendar.HOUR_OF_DAY) * 4 + calTmpStart.get(Calendar.MINUTE) / 15;
+                int slotEnd = calTmpEnd.get(Calendar.HOUR_OF_DAY) * 4 + calTmpEnd.get(Calendar.MINUTE) / 15;
+
+                for (int j = slotStart; j < slotEnd + 1; j++) {
+                    timeSlots[j] = false;
                 }
-                
+
             }
 
-            
+
         }
-        
-        
-        
         return timeSlots;
+    }
+
+    public static boolean hasConflict(int doctorID, long timeStart, long timeEnd) {
+        boolean[] timeSlots = getAvailableTime(doctorID, timeStart, timeEnd);
+        Calendar calStart = Calendar.getInstance();
+        Calendar calEnd = Calendar.getInstance();
+
+        calStart.setTime(new Date(timeStart));
+        calEnd.setTime(new Date(timeEnd));
+
+        int slotStart = calStart.get(Calendar.HOUR_OF_DAY) * 4 + calStart.get(Calendar.MINUTE) / 15;
+        int slotEnd = calEnd.get(Calendar.HOUR_OF_DAY) * 4 + calEnd.get(Calendar.MINUTE) / 15;
+
+
+        for (int j = slotStart; j < slotEnd + 1; j++) {
+            if (timeSlots[j]==false){
+                return true;
+            }
+                
+        }
+
+        return false;
     }
 }
