@@ -10,9 +10,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import model.Record;
+import model.UserWithInfo;
 
 /**
  *
@@ -191,6 +193,106 @@ public class RecordHelper {
         }
         return result;
 
+    }
+    public static HashMap<Record,UserWithInfo> searchRecordsForDoctor(int doctor_id, String keyword){
+        Connection connection = null;
+        ResultSet results;
+        PreparedStatement PS = null;
+        String error = "Error in WriteExample.writeExample";
+        HashMap<Record,UserWithInfo> result = new HashMap<Record,UserWithInfo>();
+
+        try {
+            connection = DB.ConnectToDatabase();
+            PS = connection.prepareStatement("SELECT * FROM records NATURAL JOIN "
+                    + "appointments INNER JOIN (SELECT user_id FROM patientinfo "
+                    + "WHERE default_doctor=? UNION SELECT user_id FROM "
+                    + "doctorpatient WHERE doctor_id=?) AS allpatients ON "
+                    + "appointments.patient_id=allpatients.user_id INNER JOIN "
+                    + "userinfo ON userinfo.user_id=allpatients.user_id "
+                    + "INNER JOIN users ON users.user_id=allpatients.user_id "
+                    + "WHERE email like '%" + keyword 
+                    + "%' OR first_name like '%" + keyword 
+                    + "%' OR last_name like '%" + keyword 
+                    + "%' OR appointment_start like '%" + keyword
+                    + "%' OR diagnosis like '%" + keyword
+                    + "%' OR comment like '%" + keyword
+                    + "%' OR allpatients.user_id=?"
+                    + " ORDER BY record_id DESC");
+            PS.setInt(1, doctor_id);
+            PS.setInt(2, doctor_id);
+            PS.setString(3, keyword);
+            results = PS.executeQuery();
+
+            while (results.next()) {
+                result.put(new Record(results), new UserWithInfo(results));
+            }
+
+        } catch (Exception e) {
+            System.out.println(error);
+            System.err.println(e.toString());
+        } finally {
+            try {
+                PS.close();
+            } catch (Exception e) {
+                System.out.println(error);
+                System.err.println(e.toString());
+            }
+            try {
+                connection.close();
+            } catch (Exception e) {
+                System.out.println(error);
+                System.err.println(e.toString());
+            }
+        }
+        return result;
+    }
+    
+    
+    public static HashMap<Record,UserWithInfo> getAllRecordsForDoctor(int doctor_id){
+        Connection connection = null;
+        ResultSet results;
+        PreparedStatement PS = null;
+        String error = "Error in WriteExample.writeExample";
+        HashMap<Record,UserWithInfo> result = new HashMap<Record,UserWithInfo>();
+
+        try {
+            connection = DB.ConnectToDatabase();
+            PS = connection.prepareStatement("SELECT * FROM records NATURAL JOIN "
+                    + "appointments INNER JOIN (SELECT user_id FROM patientinfo "
+                    + "WHERE default_doctor=? UNION SELECT user_id FROM "
+                    + "doctorpatient WHERE doctor_id=?) AS allpatients ON "
+                    + "appointments.patient_id=allpatients.user_id INNER JOIN "
+                    + "userinfo ON userinfo.user_id=allpatients.user_id "
+                    + "INNER JOIN users ON users.user_id=allpatients.user_id"
+                    + " ORDER BY record_id DESC");
+
+            PS.setInt(1, doctor_id);
+            PS.setInt(2, doctor_id);
+            
+            results = PS.executeQuery();
+
+            while (results.next()) {
+                result.put(new Record(results), new UserWithInfo(results));
+            }
+
+        } catch (Exception e) {
+            System.out.println(error);
+            System.err.println(e.toString());
+        } finally {
+            try {
+                PS.close();
+            } catch (Exception e) {
+                System.out.println(error);
+                System.err.println(e.toString());
+            }
+            try {
+                connection.close();
+            } catch (Exception e) {
+                System.out.println(error);
+                System.err.println(e.toString());
+            }
+        }
+        return result;
     }
 
     public static List<Record> getAllRecordsForPatientAndDoctor(int patient_id, int doctor_id, Date start, Date end) {

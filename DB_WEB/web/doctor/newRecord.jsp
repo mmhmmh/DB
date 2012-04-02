@@ -1,3 +1,4 @@
+<%@page import="helpers.RecordHelper"%>
 <%@page import="model.UserWithInfo"%>
 <%@page import="helpers.UserHelper"%>
 <%@page import="helpers.PatientHelper"%>
@@ -8,6 +9,7 @@
 <%@page import="java.text.DateFormat"%>
 <%@page import="java.util.List"%>
 <%@page import="model.Appointment"%>
+<%@page import="model.Record"%>
 <%@page import="helpers.AppointmentHelper"%>
 <%@include file="/helper/Header.jsp"%>
 
@@ -17,7 +19,7 @@
             int doctorId = ((Integer) session.getAttribute("userid")).intValue();
             
             int appId = Integer.parseInt((String)request.getParameter("appointmentlist"));
-            
+
             List<Appointment> al = (List<Appointment>) session.getAttribute("appointmentlist");
             Appointment a = al.get(appId);
             
@@ -61,7 +63,12 @@
         <table border="1">
             <thead>
                 <tr>
-                    <th>ID</th><th>Doctor</th><th>Patient</th><th>Staff</th> <th>Appointment Start</th><th>Appointment End</th>
+                    <th>ID</th>
+                    <th>Doctor</th>
+                    <th>Patient</th>
+                    <th>Staff</th>
+                    <th>Appointment Start</th>
+                    <th>Appointment End</th>
                 </tr>
             </thead>
             <tbody>
@@ -96,9 +103,60 @@
 
             <br>
             <br>
+            Additional Comments:
+            <br>
+            <textarea name="comment" rows="8" cols="60"></textarea>
+            <br>
 
             <input type="submit"  name="submit" value="Submit">
             <INPUT type="button" value="Cancel" onClick="location.href='/doctor/index.jsp'">
         </form>
+        <div><h3>Patient History</h3></div>
+        
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Record ID</th>
+                    <th>Diagnosis</th>
+                    <th>Prescription</th>
+                    <th>Scheduling of Treatment</th>
+                    <th>Comment</th>
+                    <th>Date of Visit</th>
+                </tr>
+            </thead>
+            <tbody
+                <%
+                    int patientId = a.getPatientId();
+                    List<Record> patientRecords = RecordHelper.getAllRecords(patientId);
 
+                    int recordId= 0;
+                    String diagnosis="";
+                    String prescription ="";
+                    String scheduleOfTreatment = "";
+                    String comment="";
+                    
+                    String date="";
+                    for(int i = 0; i < patientRecords.size(); i++){
+                        Record r = patientRecords.get(i);
+                        recordId = r.getRecordId();
+                        diagnosis = r.getDiagnosis();
+                        prescription = r.getPrescriptions();
+                        scheduleOfTreatment = r.getSchedulingOfTreatment();
+                        comment = r.getComment();
+                       
+                        String rdate = format.format(new Date(r.getVisitStart()));
+                        
+                %>
+                <tr>
+                    <td><%=recordId%></td>
+                    <td><%=diagnosis%></td>
+                    <td><%=prescription%></td>
+                    <td><%=scheduleOfTreatment%></td>
+                    <td><%=comment%></td>
+                    <td><%=rdate%></td>
+                </tr>
+                <% } %>
+            </tbody>
+        </table>
+        
 <%@include file="/helper/Footer.jsp" %>

@@ -12,6 +12,7 @@
     String diagnosis = request.getParameter("diagnosis");
     String prescriptions = request.getParameter("prescriptions");
     String treatment = request.getParameter("treatment");
+    String comment = request.getParameter("comment");
 
     Record record = new Record();
     record.setCreatedBy(a.getDoctorId());
@@ -21,11 +22,9 @@
     record.setSchedulingOfTreatment(treatment);
     record.setVisitStart(visitStart.getTime());
     record.setVisitEnd(visitEnd.getTime());
+    record.setComment(comment);
 
 
-    //update appointment info
-    a.setAppiontmentStatus("finished");
-    AppointmentHelper.updateAppointment(a);
 
 
     //session.setAttribute ("record", record);
@@ -35,6 +34,11 @@
 
         session.setAttribute("Success","Record Created Successfully");
         response.sendRedirect("index.jsp");
+        
+        //update appointment info
+        a.setAppiontmentStatus("finished");
+        AppointmentHelper.updateAppointment(a);
+
         return;
     } catch (Exception e) {
         //error

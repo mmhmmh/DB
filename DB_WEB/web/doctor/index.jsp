@@ -142,7 +142,7 @@
     </table>
 </div>
      
-            
+<div><a href="records.jsp"><h3>Record Viewer</h3></a></div>           
                 
                 
                 
