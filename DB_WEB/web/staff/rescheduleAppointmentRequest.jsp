@@ -23,6 +23,8 @@
         a.setStartTime(appStart.getTime());
         a.setEndTime(appEnd.getTime());
         
+        AppointmentHelper.getAvailableTime(a.getDoctorId(), a.getStartTime(), a.getEndTime());
+        
         AppointmentHelper.updateAppointment(a);
         
         session.setAttribute("Success", "Appointment Updated Successfully");

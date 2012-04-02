@@ -43,8 +43,22 @@
     
     String timeend = format.format(new Date(a.getEndTime()));
 
+    boolean [] timeSlot = AppointmentHelper.getAvailableTime(a.getDoctorId(), a.getStartTime(), a.getEndTime());
+    String timeSlotContent="";
+    
+    String s [] = new String[4];
+    for (int i=0;i<timeSlot.length;i=i+4){
 
+      for (int j=0;j<4;j++){
 
+         s[j]=(timeSlot[i+j])?"<td bgcolor=\"#00FF00\">A</td>":"<td bgcolor=\"#FF0000\">O</td>";
+          
+      }
+        
+      timeSlotContent = timeSlotContent + String.format(
+              "<tr><td>%d</td>%s%s%s%s</tr>", 
+              i/4,s[0],s[1],s[2],s[3]);
+    }
 %>
 
 
@@ -86,8 +100,22 @@
     <input type="submit" value="Reschedule"/>
 
 </form>
-
-
+        <br>
+<h3>Available Time Slots</h3>
+A = Avaliable<br>
+O = Occupied<br>
+<table border="1">
+    <thead>
+    <tr>
+        <th>Hour</th><th>0 Min</th><th>15 Min</th><th>30 Min</th><th>45 Min</th>
+    </tr>
+    </thead>
+    <tbody>
+        <%=timeSlotContent%>
+    </tbody>
+    
+    
+</table>
 
 
 <%@include file="/helper/Footer.jsp" %>
