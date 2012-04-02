@@ -20,13 +20,15 @@
     int doctorId = Integer.parseInt(request.getParameter("doclist"));
 
     List<UserWithInfo> patList = DoctorHelper.getAllPatientsForDoctor(doctorId);
-    
-    
-    Appointment a=new Appointment();
+
+    Appointment ca = (Appointment) session.getAttribute("conflictappointment");
+    session.setAttribute("conflictappointment", null);
+
+    Appointment a = new Appointment();
     a.setDoctorId(doctorId);
-    
+
     session.setAttribute("appointment", a);
-    
+
 
     String patListContent = "";
 
@@ -49,10 +51,28 @@
 
 
     DateFormat format = new SimpleDateFormat("MM/dd/yyyy HH:mm");
-    String timestart = format.format(new Date());
-    String timeend = format.format(new Date());
+    String timestart;
+    String timeend;
+    boolean[] timeSlot;
 
-    boolean[] timeSlot = AppointmentHelper.getAvailableTime(doctorId, (new Date()).getTime(), (new Date()).getTime());
+    timeend = format.format(new Date());
+    timestart = format.format(new Date());
+    timeSlot = AppointmentHelper.getAvailableTime(doctorId, (new Date()).getTime(), (new Date()).getTime());
+
+    DateFormat dateformat = new SimpleDateFormat("MM/dd/yyyy");
+    String slotDateContent = dateformat.format(new Date());
+    
+    if (ca != null) {
+        timestart = format.format(ca.getStartTime());
+        timeend = format.format(ca.getEndTime());
+        slotDateContent = dateformat.format(ca.getStartTime());
+        timeSlot = AppointmentHelper.getAvailableTime(doctorId, ca.getStartTime(), ca.getEndTime());
+    }
+
+
+    
+    
+    
     String timeSlotContent = "";
 
     String s[] = new String[4];
@@ -90,7 +110,7 @@
         <tr>
             <td>Doctor:</td>
             <td><%=doctor%></td>
-             <td><a href="/staff/selectDoctor.jsp">Change Doctor</a> </td>
+            <td><a href="/staff/selectDoctor.jsp">Change Doctor</a> </td>
         </tr>
 
         <tr>
@@ -115,6 +135,9 @@
 <h3>Available Time Slots</h3>
 A = Avaliable<br>
 O = Occupied<br>
+
+<br>
+<%=slotDateContent%>
 <table border="1">
     <thead>
         <tr>
