@@ -16,12 +16,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Account Page</title>
-    </head>
-    <body>
+<%@include file="/helper/Header.jsp"%>
         <%
            String email = (String) session.getAttribute("username");
            int userid = ((Integer) session.getAttribute("userid")).intValue();
@@ -30,44 +25,47 @@
            String lname = myinfo.getlName();
            Enum roleid = RoleHelper.getRoleFromInt(myinfo.getRole());
            String role = roleid.name();
-          String phone="";
-           if (RoleHelper.Role.Patient==roleid) {
-               Patient result = PatientHelper.getPatientById(userid);
-               phone = result.getPi().getPhone();
-           }
+          
         %>
         <h3>Account Information</h3>
         
-        <table>
-        
-        	<tr>
-        		<td>First Name:</td><td><%=fname%></td>
-        	</tr>
-        	
-        	<tr>
-        		<td>Last Name:</td><td><%=lname%></td>
-        	</tr>
-        	        	<tr>
-        		<td>Email:</td><td><%=email%></td>
-        	</tr>
-        	</tr>
-                <%
+        <dl>
+            <dt>First Name:</dt><dd><%=fname%></dd>
+            <dt>Last Name:</dt><dd><%=lname%></dd>
+            <dt>Email:</dt><dd><%=email%></dd>
+            <%
                 if (RoleHelper.Role.Patient==roleid) {
-                %>
-        	<tr>
-        		<td>Phone #:</td><td><%=phone%></td>
-        	</tr>
-                <%
-                               }
-                %>
-        	<tr>
-        		<td>Role:</td><td><%=role%></td>
-        	</tr>
+                    Patient result = PatientHelper.getPatientById(userid);
+                    int dfdocid = result.getPi().getDefaultDoctor();
+                    UserWithInfo dfdoc = UserHelper.findUserWithInfo(dfdocid);
+                    String defaultDoctor = dfdoc.getfName() + " " + dfdoc.getlName();
+                    String phone = result.getPi().getPhone();
+                    String address1 = result.getSi().getAddress1();
+                    String address2 = result.getSi().getAddress2();
+                    if(address2.trim().length() != 0){
+                    address1 = address1 + "/n" + address2;
+                    }
+                    String city = result.getSi().getCity();
+                    String province = result.getSi().getProvince();
+                    String pcode = result.getSi().getPostCode();
+                    int hcard = result.getPi().getHealthCard();
+                    int sinnum = result.getPi().getSocialInsurance();
+                    String hstatus = result.getCurrentHealth();
+            %>
+            <dt>Phone #:</dt><dd><%=phone%></dd>
+            <dt>Address:</dt><dd><%=address1%></dd>
+            <dt>City:</dt><dd><%=city%></dd>
+            <dt>Province:</dt><dd><%=province%></dd>
+            <dt>Postal Code:</dt><dd><%=pcode%></dd>
+            <dt>Health Card Number:</dt><dd><%=hcard%></dd>
+            <dt>Social Insurance Number:</dt><dd><%=sinnum%></dd>
+            <dt>Heath Status:</dt><dd><%=hstatus%></dd>
+            <dt>Default Doctor:</dt><dd><%=defaultDoctor%></dd>
+            <% } %>
+            <dt>Role:</dt><dd><%=role%></dd>
         	
 
-        </table>
-        <br>
-        
+        </dl>
         <a href="editAccount.jsp">Edit Account Info</a>
         
     </body>

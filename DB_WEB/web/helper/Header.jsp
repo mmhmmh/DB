@@ -1,5 +1,6 @@
 <html>
 <head>
+<link rel="stylesheet" href="/DB/default.css" type="text/css">
 <title>ECE456</title>
 
 <script>

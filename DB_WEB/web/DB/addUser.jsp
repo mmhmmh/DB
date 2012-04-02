@@ -6,12 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Add User</title>
-    </head>
-    <body>
+<%@include file="/helper/Header.jsp"%>
         <H1>New User</H1>
         <form action="addUserRequest.jsp" method="POST">
 

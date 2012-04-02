@@ -1,20 +1,18 @@
-<%-- 
-    Document   : editAccount
-    Created on : 28-Mar-2012, 1:22:11 PM
-    Author     : Michael
+<%@page import="model.PatientInfo"%>
+<%@page import="model.UserWithInfo"%>
+<%@page import="model.Patient"%>
+<%@page import="helpers.UserHelper"%>
+<%@page import="helpers.RoleHelper"%>
+<%@page import="helpers.PatientHelper"%>
+<%
+    int userid = ((Integer) session.getAttribute("userid")).intValue();
+    UserWithInfo myinfo = UserHelper.findUserWithInfo(userid);
+    Enum roleid = RoleHelper.getRoleFromInt(myinfo.getRole());
+    if (RoleHelper.Role.Patient==roleid) {
+        response.sendRedirect("/patient/editPatient.jsp");
+    }      
+%>
 
-    Purpose:  edit patient's info
-    User: Patient, Staff
---%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-    </head>
-    <body>
-        <h1>Hello World!</h1>
-    </body>
-</html>
+<%@include file="/helper/Header.jsp"%>
+        <h3>Edit Account</h3>
+<%@include file="/helper/Footer.jsp"%>

@@ -3,7 +3,8 @@
     Created on : Mar 30, 2012, 12:40:43 AM
     Author     : Administrator
 --%>
-<%@page import="user.UserManager"%>
+<%@page import="helpers.UserHelper"%>
+<%@page import="model.UserWithInfo"%>
 <%
 
     String fName = request.getParameter("fname");
@@ -26,8 +27,14 @@
     if (!password.equals(rpassword)) {
         //password mismatch
     } else {
+        UserWithInfo newUser = new UserWithInfo();
+        newUser.setPassword(password);
+        newUser.setUsername(email);
+        newUser.setfName(fName);
+        newUser.setlName(lName);
+        newUser.setRole(role);
         //success
-        UserManager.addUser(fName, lName, role, email, password);
+        UserHelper.addUser(newUser);
     }
 
     response.sendRedirect("addUser.jsp");
