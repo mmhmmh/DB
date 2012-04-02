@@ -43,6 +43,14 @@ height:30px;
 thead th, tfoot th {
 padding:5px;
 }
+
+table th{
+    text-align: center;
+}
+
+table td{
+    text-align: center;
+}
 table a {
 color: #333333;
 text-decoration:none;
@@ -122,6 +130,11 @@ div.row input
 margin-left: 1em;
 float:left;
 } 
+div.row span
+{
+margin-left: 1em;
+float:left;
+}
 
 div.centered {
     text-align: center;	

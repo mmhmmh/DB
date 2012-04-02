@@ -105,6 +105,12 @@
     PatientHelper.addAndUpdatePatient(p);
     
     session.setAttribute("patientEdit", null);
-    session.setAttribute("Success", "Successfully added patient");
-    response.sendRedirect("editPatient.jsp");
+    if (p.getId() == 0) {
+        session.setAttribute("Success", "Successfully added patient");
+        response.sendRedirect("newAppointment.jsp");
+    } else {
+        session.setAttribute("Success", "Successfully updated patient");
+        response.sendRedirect("editPatient.jsp?patient_id="+p.getId());
+    }
+    
 %>

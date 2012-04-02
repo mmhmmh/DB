@@ -42,7 +42,7 @@
         String rescheduleLink = String.format("<a href=\"rescheduleAppointment.jsp?appointmentid=%d\">Reschedule</a>", a.getAppointmentId());
         String actionStr = deleteLink + "&nbsp;&nbsp;&nbsp;&nbsp;" + rescheduleLink;
 
-        appInfoContent = appInfoContent + String.format("<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>",
+        appInfoContent = appInfoContent + String.format("<tr><td>%s</td><td>%s</td><td><a href=records.jsp?patient_id="+a.getPatientId()+">%s</a></td><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>",
                 a.getAppointmentId(), docName, patName, staffName, timestart, timeend, actionStr);
 
     }

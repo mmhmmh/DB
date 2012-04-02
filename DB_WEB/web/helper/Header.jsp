@@ -54,6 +54,7 @@ if (role == Role.Doctor){
 <%} else if (role == Role.Staff) {%>
 <ul>
 <li><a href="/staff/index.jsp">Home</a></li>
+<li><a href="/staff/selectPatient.jsp">Patients Records</a></li>
 <li><a href="/DB/myAccount.jsp">My Account</a></li>
 <li><a href="/DB/logout.jsp">Logout</a></li>
 </ul> 
