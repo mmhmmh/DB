@@ -35,6 +35,7 @@ public class PatientHelper {
                     + "natural join roles where role_name='Patient'");
 
             results = PS.executeQuery();
+         
             while (results.next()) {
                 result.add(new User(results));
             }
@@ -130,21 +131,24 @@ public class PatientHelper {
             connection = DB.ConnectToDatabase();
             PS = connection.prepareStatement(
                     "INSERT INTO patientinfo (user_id, phone, health_card, "
-                    + "is_active, social_insurance) VALUES (?,?,?,?,?) "
+                    + "is_active, social_insurance,default_doctor) VALUES (?,?,?,?,?,?) "
                     + "ON DUPLICATE KEY UPDATE phone=?,"
                     + "health_card=?,"
                     + "is_active=?,"
-                    + "social_insurance=?");
+                    + "social_insurance=?,"
+                    + "default_doctor=?");
             
             PS.setInt(1, pi.getUserId());
             PS.setString(2, pi.getPhone());
             PS.setInt(3, pi.getHealthCard());
             PS.setInt(4, pi.getIsActive());
             PS.setInt(5, pi.getSocialInsurance());
-            PS.setString(6, pi.getPhone());
-            PS.setInt(7, pi.getHealthCard());
-            PS.setInt(8, pi.getIsActive());
-            PS.setInt(9, pi.getSocialInsurance());
+            PS.setInt(6, pi.getDefaultDoctor());
+            PS.setString(7, pi.getPhone());
+            PS.setInt(8, pi.getHealthCard());
+            PS.setInt(9, pi.getIsActive());
+            PS.setInt(10, pi.getSocialInsurance());
+            PS.setInt(11, pi.getDefaultDoctor());
             
             PS.execute();
             success = true;

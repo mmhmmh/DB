@@ -20,7 +20,12 @@ public class SinInfo {
     String province;
     
     public SinInfo() {
-        
+        sin = 0;
+        address1 = "";
+        address2 = "";
+        postCode = "";
+        city = "";
+        province = "";
     }
     
     public SinInfo(ResultSet rs) throws Exception {

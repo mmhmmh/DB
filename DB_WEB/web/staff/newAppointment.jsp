@@ -56,7 +56,7 @@
         <tr>
             <td>Patient:</td>
             <td><%=patListContent%></td>
-            <td><a href="../DB/addUser.jsp">Create User</a> </td>
+            <td><a href="../staff/editPatient.jsp">Add Patient</a> </td>
         </tr>
 
         <tr>

@@ -17,6 +17,10 @@ public class UserWithInfo extends User {
     
     public UserWithInfo() {
         super();
+        fName = "";
+        lName = "";
+        role = 0;
+               
     }
     
     public UserWithInfo(ResultSet results) throws Exception{

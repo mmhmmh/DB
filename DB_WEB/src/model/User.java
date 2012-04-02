@@ -16,7 +16,9 @@ public class User {
     String password;
 
     public User() {
-        
+        id = 0;
+        username = "";
+        password = "";
     }
     
     public String getPassword() {
@@ -30,6 +32,7 @@ public class User {
     public User(ResultSet results) throws Exception{
         id = results.getInt("user_id");
         username = results.getString("email");
+        password = results.getString("password");
         //String tmp = results.getString("password");
         //password = tmp == null ? "" : tmp;
     }

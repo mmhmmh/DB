@@ -19,6 +19,10 @@ public class Patient extends UserWithInfo {
 
     public Patient() {
         super();
+        healthCard = 0;
+        currentHealth = "";
+        si = new SinInfo();
+        pi = new PatientInfo();
     }
     
     public PatientInfo getPi() {

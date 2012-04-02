@@ -16,9 +16,15 @@ public class PatientInfo {
     int healthCard;
     int isActive;
     int socialInsurance;
+    int defaultDoctor;
     
     public PatientInfo() {
-        
+        userId = 0;
+        phone = "";
+        healthCard = 0;
+        isActive = 0;
+        socialInsurance = 0;
+        defaultDoctor = 0;
     }
     
     public PatientInfo(ResultSet rs) throws Exception {
@@ -27,8 +33,19 @@ public class PatientInfo {
         healthCard = rs.getInt("health_card");
         isActive = rs.getInt("is_active");
         socialInsurance = rs.getInt("social_insurance");
+        defaultDoctor = rs.getInt("default_doctor");
     }
 
+    public int getDefaultDoctor() {
+        return defaultDoctor;
+    }
+
+    public void setDefaultDoctor(int defaultDoctor) {
+        this.defaultDoctor = defaultDoctor;
+    }
+
+    
+    
     public int getHealthCard() {
         return healthCard;
     }
