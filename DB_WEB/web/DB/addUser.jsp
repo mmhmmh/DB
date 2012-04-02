@@ -8,6 +8,8 @@
 <!DOCTYPE html>
 <%@include file="/helper/Header.jsp"%>
         <H1>New User</H1>
+        
+        <%@include file="/helper/ResultDisplay.jsp" %>
         <form action="addUserRequest.jsp" method="POST">
 
 

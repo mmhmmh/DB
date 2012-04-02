@@ -51,9 +51,6 @@
 
 
         %>
-
-        
-            <a href="../DB/myAccount.jsp">My Account</a>
  
                 <h3> Next Appointment:</h3>
                 <text><%=appContent%></text>
@@ -105,6 +102,5 @@
                         
                     </table>
                     <a href="records.jsp">All Record</a>
-                    <a href="">Search Record</a>
 
 <%@include file="/helper/Footer.jsp" %>

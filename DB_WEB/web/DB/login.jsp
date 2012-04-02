@@ -1,13 +1,14 @@
-<%@include file="/helper/Header.jsp"%>
 <%@page import="helpers.RoleHelper"%>
 <%@page import="helpers.RoleHelper.Role"%>
-<h1>LOGIN FORM</h1>
+<%@include file="/helper/Header.jsp"%>
+
+
+<div class="centered"><h1 style="margin-left: auto;margin-right: auto;">Login</h1></div>
 <%
 String myname =  (String)session.getAttribute("username");
 
 if(myname!=null && !myname.equals(""))
     {
-        RoleHelper.Role role = RoleHelper.getUserRole(myname);
 
         if (role == Role.Doctor) {
             response.sendRedirect("../doctor/index.jsp");
@@ -37,7 +38,8 @@ else
                 <td> Password  : </td><td> <input name="password" size=15 type="password" /> </td> 
             </tr>
         </table>
-        <input type="submit" value="login" />
+        <br/>
+        <div class="centered"><input style="margin-left: auto;margin-right: auto;" type="submit" value="login" /></div>
     </form>
     <% 
     }

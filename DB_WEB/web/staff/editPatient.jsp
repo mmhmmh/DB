@@ -132,7 +132,8 @@
     <div class="row">
         <label for="doctor">Doctor:</label> <%=docListContent%>
     </div>
-    
+    <div style="clear:both"/>
+    <br/>
     <input type="submit" value="Submit"/>
 
 </form>

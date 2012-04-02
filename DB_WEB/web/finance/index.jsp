@@ -3,7 +3,7 @@
 <%@page import="helpers.DoctorHelper"%>
 <%@include file="/helper/Header.jsp"%>
 
-<div>Doctor List</div>
+<div><h2>Doctor List</h2></div>
 
 
 <%

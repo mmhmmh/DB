@@ -141,8 +141,9 @@
         </tbody>
     </table>
 </div>
-     
-<div><a href="records.jsp"><h3>Record Viewer</h3></a></div>           
+<br/>
+<br/>
+        <div><input type="button" onclick="location.href='records.jsp'" value="View Records"/></div>           
                 
                 
                 

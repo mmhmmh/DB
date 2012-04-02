@@ -74,7 +74,8 @@
         <label for="phone">Phone:</label> <input
             type="text" name="phone" id="phone" value="<%=pi.getPhone()%>" />
     </div>
-
+    <div style="clear:both"/>
+    <br/>
     <input type="submit" value="Submit"/>
 
 </form>

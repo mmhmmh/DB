@@ -61,6 +61,9 @@ public class PatientHelper {
     
     public static void addAndUpdatePatient(Patient p) {
         int key = UserHelper.addUser(p);
+        if (key == -1) {
+            return;
+        }
         if (key != 0) {
             p.getPi().setUserId(key);
         }

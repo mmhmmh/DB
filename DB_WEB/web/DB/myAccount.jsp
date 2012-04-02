@@ -24,12 +24,14 @@
            String fname = myinfo.getfName();
            String lname = myinfo.getlName();
            Enum roleid = RoleHelper.getRoleFromInt(myinfo.getRole());
-           String role = roleid.name();
+           String roleName = roleid.name();
           
         %>
         <h3>Account Information</h3>
-        
+        <div style="clear:both"/>
         <dl>
+                    
+
             <dt>First Name:</dt><dd><%=fname%></dd>
             <dt>Last Name:</dt><dd><%=lname%></dd>
             <dt>Email:</dt><dd><%=email%></dd>
@@ -62,10 +64,11 @@
             <dt>Heath Status:</dt><dd><%=hstatus%></dd>
             <dt>Default Doctor:</dt><dd><%=defaultDoctor%></dd>
             <% } %>
-            <dt>Role:</dt><dd><%=role%></dd>
+            <dt>Role:</dt><dd><%=roleName%></dd>
         	
 
         </dl>
+        <div style="clear:both"/>
         <a href="editAccount.jsp">Edit Account Info</a>
         
     </body>

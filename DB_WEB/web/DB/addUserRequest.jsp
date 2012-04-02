@@ -3,6 +3,7 @@
     Created on : Mar 30, 2012, 12:40:43 AM
     Author     : Administrator
 --%>
+<%@page import="helpers.RoleHelper"%>
 <%@page import="helpers.UserHelper"%>
 <%@page import="model.UserWithInfo"%>
 <%
@@ -34,7 +35,12 @@
         newUser.setlName(lName);
         newUser.setRole(role);
         //success
-        UserHelper.addUser(newUser);
+        int result = UserHelper.addUser(newUser);
+        if (result == -1) {
+            session.setAttribute("Error", "Cannot add user, user already exist");
+        } else {
+            session.setAttribute("Success", "Successfully added user");
+        }
     }
 
     response.sendRedirect("addUser.jsp");

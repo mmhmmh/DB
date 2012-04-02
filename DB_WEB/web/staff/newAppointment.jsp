@@ -11,9 +11,6 @@
 
 <%@include file="/helper/Header.jsp"%>
 
-<%@include file="/staff/sublinks.jsp"%>
-
-
 
 <%
     int staffId = ((Integer) session.getAttribute("userid")).intValue();
@@ -138,7 +135,8 @@ O = Occupied<br>
 
 <br>
 <%=slotDateContent%>
-<table border="1">
+<div style="margin: auto;width: 300px; height: 200px; overflow-y: auto;border: solid gray">
+<table border="1" style="margin-top:2px;margin-bottom: 2px">
     <thead>
         <tr>
             <th>Hour</th><th>0 Min</th><th>15 Min</th><th>30 Min</th><th>45 Min</th>
@@ -150,5 +148,6 @@ O = Occupied<br>
 
 
 </table>
+</div>
 
 <%@include file="/helper/Footer.jsp" %>

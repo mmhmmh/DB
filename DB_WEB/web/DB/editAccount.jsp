@@ -11,9 +11,16 @@
     if (RoleHelper.Role.Patient==roleid) {
         response.sendRedirect("/patient/editPatient.jsp");
     }      
+    session.setAttribute("patientEdit", myinfo);
+
 %>
 
 <%@include file="/helper/Header.jsp"%>
+
+<h3>Edit My Account</h3>
+
+<%@include file="/helper/ResultDisplay.jsp" %>
+
 <form method="POST" action="editUserInfoRequest.jsp">
 
     <div class="row">
@@ -31,6 +38,9 @@
             type="text" name="lastname" id="lastname" value="<%=myinfo.getlName()%>" />
     </div>
 
+    <div style="clear:both"/>
+    <br/>
+    
     <input type="submit" value="Submit"/>
 
 </form>

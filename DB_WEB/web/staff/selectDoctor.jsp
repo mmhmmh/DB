@@ -9,7 +9,6 @@
 <%@page import="model.User"%>
 <%@page import="java.util.List"%>
 <%@include file="/helper/Header.jsp"%>
-<%@include file="/patient/sublinks.jsp"%>
 
 <%
     List<User> docList = DoctorHelper.getAllDoctors();

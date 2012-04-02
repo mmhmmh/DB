@@ -36,11 +36,11 @@
     DateFormat format = new SimpleDateFormat("MM/dd/yyyy HH:mm");
 %>
 
-<div>Doctor <%=doctorName%> Detail</div>
+<div><h2>Doctor <%=doctorName%> Detail</h2></div>
 
 <% if (start == null || end == null) {%>
 
-<div>Search Range</div>
+<div><h3>Search By Time</h3></div>
 <form action="searchDoctorDetail.jsp">
     <table>
         <tr>
@@ -53,6 +53,7 @@
         
         <input name="doctor_id" value="<%=doctorIdString%>" type="hidden" />
     </table>
+    <br/>
     <input type="submit" value="Search"/>
 </form>
 <%} else {%>
@@ -80,8 +81,8 @@ if (patient_id == null) {
             for(Integer u : list.keySet()) { 
             %>
             <tr>
-                <td><%=u%></td>
-                <td><%=list.get(u)%></td>
+                <td style="text-align: center"><%=u%></td>
+                <td style="text-align: center"><%=list.get(u)%></td>
                 <td><a href="searchDoctorDetail.jsp?doctor_id=<%=doctorId%>&patient_id=<%=u%>&appstart=<%=start%>&append=<%=end%>">search</a></td>
             </tr>
             <% } %>

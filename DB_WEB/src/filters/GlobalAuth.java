@@ -101,7 +101,7 @@ public class GlobalAuth implements Filter {
 
         HttpSession session = ((HttpServletRequest) request).getSession(true);
 
-        if (!url.contains("login.jsp") && !url.contains("checkLogin.jsp")) {
+        if (!url.contains("login.jsp") && !url.contains("checkLogin.jsp") && !url.contains("default.css")) {
             try {
                 String username = (String) session.getAttribute("username");
                 //int userRole = ((Integer) session.getAttribute("userid")).intValue();

@@ -17,6 +17,9 @@ import model.UserWithInfo;
 public class UserHelper {
 
     public static int addUser(UserWithInfo info) {
+        if (info.getId() == 0 && RoleHelper.getUserRole(info.getUsername()) != RoleHelper.Role.Unknown) {
+            return -1;
+        }
         Connection connection = null;
         PreparedStatement PS = null;
         Boolean success = false;
