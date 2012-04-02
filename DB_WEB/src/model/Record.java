@@ -21,9 +21,13 @@ public class Record {
     String prescriptions;
     String schedulingOfTreatment;
     int base_id;
+    String comment;
 
     public Record(){
-        
+        diagnosis = "";
+        prescriptions = "";
+        schedulingOfTreatment = "";
+        comment = "";
     }
     
     public Record(ResultSet results) throws Exception {
@@ -37,6 +41,7 @@ public class Record {
         prescriptions = results.getString("prescriptions");
         schedulingOfTreatment = results.getString("scheduling_of_treatment");
         base_id = results.getInt("base_id");
+        comment = results.getString("comment");
     }
 
     public int getBase_id() {
@@ -67,6 +72,15 @@ public class Record {
         return prescriptions;
     }
 
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    
     public int getRecordId() {
         return recordId;
     }
