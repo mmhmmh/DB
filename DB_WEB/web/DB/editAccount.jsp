@@ -14,5 +14,24 @@
 %>
 
 <%@include file="/helper/Header.jsp"%>
-        <h3>Edit Account</h3>
+<form method="POST" action="editUserInfoRequest.jsp">
+
+    <div class="row">
+        <label for="password">Password:</label> <input
+            type="text" name="password" id="password" value="" />
+    </div>
+
+    <div class="row">
+        <label for="firstname">First Name:</label> <input
+            type="text" name="firstname" id="firstname" value="<%=myinfo.getfName()%>" />
+    </div>
+
+    <div class="row">
+        <label for="lastname">Last Name:</label> <input
+            type="text" name="lastname" id="lastname" value="<%=myinfo.getlName()%>" />
+    </div>
+
+    <input type="submit" value="Submit"/>
+
+</form>
 <%@include file="/helper/Footer.jsp"%>
