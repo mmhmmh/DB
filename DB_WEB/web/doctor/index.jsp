@@ -25,7 +25,7 @@
     session.setAttribute("appointmentlist", al);
 %>
 
-    <%@include file="/helper/ResultDisplay.jsp" %>
+    
 <div id='doctor_appointments'>
     <h3>Future Appointment</h3>
 
@@ -77,7 +77,9 @@
             <input type="submit" name="sch" value="Search">
             <INPUT type="submit" name="sch" value="Show All">
         </div>
+        <%@include file="/helper/ResultDisplay.jsp" %>
     </form>
+    
     <table border="1">
         <thead>
             <tr>
@@ -112,6 +114,7 @@
         <%
               }else{
                   patients = fpatients;
+                  session.removeAttribute("filteredPatients");
               }
          
          }
