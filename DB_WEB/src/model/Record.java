@@ -11,6 +11,7 @@ import java.sql.ResultSet;
  * @author Mark
  */
 public class Record {
+
     int recordId;
     int appointmentId;
     long visitStart;
@@ -23,13 +24,13 @@ public class Record {
     int base_id;
     String comment;
 
-    public Record(){
+    public Record() {
         diagnosis = "";
         prescriptions = "";
         schedulingOfTreatment = "";
         comment = "";
     }
-    
+
     public Record(ResultSet results) throws Exception {
         recordId = results.getInt("record_id");
         appointmentId = results.getInt("appointment_id");
@@ -40,7 +41,11 @@ public class Record {
         diagnosis = results.getString("diagnosis");
         prescriptions = results.getString("prescriptions");
         schedulingOfTreatment = results.getString("scheduling_of_treatment");
-        base_id = results.getInt("base_id");
+        base_id = 0;
+        try {
+            base_id = results.getInt("base_id");
+        } catch (Exception e) {
+        }
         comment = results.getString("comment");
     }
 
@@ -51,7 +56,7 @@ public class Record {
     public void setBase_id(int base_id) {
         this.base_id = base_id;
     }
-    
+
     public int getAppointmentId() {
         return appointmentId;
     }
@@ -80,7 +85,6 @@ public class Record {
         this.comment = comment;
     }
 
-    
     public int getRecordId() {
         return recordId;
     }
@@ -132,5 +136,4 @@ public class Record {
     public void setVisitStart(long visitStart) {
         this.visitStart = visitStart;
     }
-    
 }

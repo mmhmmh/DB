@@ -17,6 +17,8 @@ public class Patient extends UserWithInfo {
     int healthCard;
     String currentHealth;
 
+    
+    
     public Patient() {
         super();
         healthCard = 0;

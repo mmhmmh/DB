@@ -10,6 +10,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.LinkedList;
 import java.util.List;
+import model.User;
+import model.UserWithInfo;
 
 /**
  *
@@ -25,7 +27,7 @@ public class DoctorPatientHelper {
         try {
             connection = DB.ConnectToDatabase();
             PS = connection.prepareStatement(
-                    "REPLACE INTO doctorpatient(doctor_id,patient_id) VALUES (?,?)");
+                    "INSERT INTO doctorpatient (doctor_id,user_id) VALUES (?,?)");
             PS.setInt(1, doctorId);
             PS.setInt(2, patientId);
             PS.execute();
@@ -64,7 +66,7 @@ public class DoctorPatientHelper {
             
             results = PS.executeQuery();
             while (results.next()) {
-                result.add(new Integer(results.getInt("patient_id")));
+                result.add(new Integer(results.getInt("user_id")));
             }
 
         } catch (Exception e) {
@@ -98,7 +100,7 @@ public class DoctorPatientHelper {
         try {
             connection = DB.ConnectToDatabase();
             PS = connection.prepareStatement(
-                    "SELECT * FROM doctorpatient WHERE doctor_id=? AND patient_id=?");
+                    "SELECT * FROM doctorpatient WHERE doctor_id=? AND user_id=?");
             PS.setInt(1, doctorId);
             PS.setInt(2, patientId);
             
@@ -136,7 +138,7 @@ public class DoctorPatientHelper {
         try {
             connection = DB.ConnectToDatabase();
             PS = connection.prepareStatement(
-                    "DELETE FROM doctorpatient WHERE doctor_id=? AND patient_id=?");
+                    "DELETE FROM doctorpatient WHERE doctor_id=? AND user_id=?");
             PS.setInt(1, doctorId);
             PS.setInt(2, patientId);
             PS.execute();
@@ -158,5 +160,46 @@ public class DoctorPatientHelper {
                 System.err.println(e.toString());
             }
         }
+    }
+    
+    public static List<User> getAllDoctorsForPatient(int patientId) {
+        Connection connection = null;
+        ResultSet results;
+        PreparedStatement PS = null;
+        String error = "Error in WriteExample.writeExample";
+        List<User> result = new LinkedList<User>();
+
+        try {
+            connection = DB.ConnectToDatabase();
+            PS = connection.prepareStatement(
+                    "SELECT * FROM doctorpatient INNER JOIN users ON doctorpatient.doctor_id=users.user_id WHERE doctorpatient.user_id=?");
+            PS.setInt(1, patientId);
+            
+            results = PS.executeQuery();
+            while (results.next()) {
+                User user = new User();
+                user.setId(results.getInt("doctor_id"));
+                user.setUsername(results.getString("email"));
+                result.add(user);
+            }
+
+        } catch (Exception e) {
+            System.out.println(error);
+            System.err.println(e.toString());
+        } finally {
+            try {
+                PS.close();
+            } catch (Exception e) {
+                System.out.println(error);
+                System.err.println(e.toString());
+            }
+            try {
+                connection.close();
+            } catch (Exception e) {
+                System.out.println(error);
+                System.err.println(e.toString());
+            }
+        }
+        return result;
     }
 }

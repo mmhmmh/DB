@@ -70,8 +70,7 @@ public class DoctorHelper {
         try {
             connection = DB.ConnectToDatabase();
             PS = connection.prepareStatement(
-                    "select user_id, first_name, last_name, "
-                    + "email from users natural join userinfo "
+                    "select * from users natural join userinfo "
                     + "natural join roles where role_name='Doctor'");
 
             //PS.setString(1, "testString");
