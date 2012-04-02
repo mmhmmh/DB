@@ -63,28 +63,30 @@ public class RecordHelper {
         return result;
     }
 
-    public static List<Record> getRecentRecords(int userId, int numberOfRecords) {
+    public static HashMap<Record, UserWithInfo> getRecentRecords(int userId, int numberOfRecords) {
         Connection connection = null;
         ResultSet results;
         PreparedStatement PS = null;
         String error = "Error in RecordHelper.getRecentRecords";
-        List<Record> result = new LinkedList<Record>();
+        HashMap<Record, UserWithInfo> result = new HashMap<Record, UserWithInfo>();
 
         try {
             connection = DB.ConnectToDatabase();
-            PS = connection.prepareStatement("SELECT * FROM records INNER JOIN "
-                    + "appointments ON records.appointment_id=appointments.appointment_id "
-                    + "INNER JOIN userinfo ON userinfo.user_id=records.created_by "
-                    + "INNER JOIN (SELECT base_id AS B, max(created_on) AS C FROM "
-                    + "records AS R GROUP BY R.base_id ) AS M ON base_id=M.B AND "
-                    + "created_on=M.C WHERE patient_id=? ORDER BY record_id DESC LIMIT ?");
+            PS = connection.prepareStatement("SELECT * FROM records "
+                    + "NATURAL JOIN appointments INNER JOIN (SELECT "
+                    + "max(record_id) AS mr FROM records NATURAL JOIN "
+                    + "appointments GROUP BY appointment_id) AS mar ON "
+                    + "mar.mr=records.record_id INNER JOIN userinfo on "
+                    + "appointments.doctor_id=userinfo.user_id INNER JOIN "
+                    + "users ON users.user_id=userinfo.user_id "
+                    + "WHERE patient_id=? ORDER BY created_on DESC LIMIT ?");
 
             PS.setInt(1, userId);
             PS.setInt(2, numberOfRecords);
 
             results = PS.executeQuery();
             while (results.next()) {
-                result.add(new Record(results));
+                result.put(new Record(results), new UserWithInfo(results));
             }
 
         } catch (Exception e) {

@@ -60,20 +60,29 @@
                         session.removeAttribute("filteredRecords");
                     }
                 }
+            int patientId = 0;
+            String pName = "";
+            String pEmail = "";
+            int recordId=0;
+            String visitDate = "";
+            String diagnosis = "";
+            String schedulingOfTreatment = "";
+            String prescriptions = "";
+            String comment = "";
+            DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
             for (Record r:recordList.keySet()) {
                 UserWithInfo u = recordList.get(r);
-                int patientId = ((Integer) u.getId()).intValue();
-                String pName = u.getfName() + " " +  u.getlName();
-                String pEmail = u.getUsername();
+                patientId = ((Integer) u.getId()).intValue();
+                pName = u.getfName() + " " +  u.getlName();
+                pEmail = u.getUsername();
 
-                int recordId = r.getRecordId();
+                recordId = r.getRecordId();
 
-                DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-                String visitDate = format.format(new Date(r.getVisitStart()));
-                String diagnosis = r.getDiagnosis();
-                String prescriptions = r.getPrescriptions();
-                String schedulingOfTreatment = r.getSchedulingOfTreatment();
-                String comment = r.getComment();
+                visitDate = format.format(new Date(r.getVisitStart()));
+                diagnosis = r.getDiagnosis();
+                prescriptions = r.getPrescriptions();
+                schedulingOfTreatment = r.getSchedulingOfTreatment();
+                comment = r.getComment();
         %>
         <td><%=recordId%></td>
         <td><%=patientId%></td>

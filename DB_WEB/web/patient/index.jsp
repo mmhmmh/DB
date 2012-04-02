@@ -27,9 +27,9 @@
             String recordList = "";
 
             Appointment a = AppointmentHelper.getNextAppointment(userid);
-            List<Record> rcd= RecordHelper.getRecentRecords(userid, 10);
+            HashMap<Record, UserWithInfo> rcd= RecordHelper.getRecentRecords(userid, 10);
             
-
+            DateFormat format = new SimpleDateFormat("MM/dd/yyyy HH:mm");
             if (a == null) {
                 appContent = "Not future appointment not avialable";
             } else {
@@ -38,7 +38,7 @@
                 int doctid = a.getDoctorId();
                 String doctname = DoctorHelper.getName(doctid);
 
-                DateFormat format = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+                
                 String timestart = format.format(new Date(a.getStartTime()));
 
                 String timeend = format.format(new Date(a.getEndTime()));
@@ -75,30 +75,26 @@
                         <tr><td>no records</td></tr>
                         <%
                             }else{
-                                String diag = "";
+                                String diagnosis = "";
                                 String prescriptions ="";
                                 int recordId = 0;
-                                String visitstart = "";
-                                String docname="";
+                                String dName="";
+                                String visitDate = "";
                                 
-                                for (Record record : rcd){
-                                     diag = record.getDiagnosis();
-                                     prescriptions = record.getPrescriptions();
-                                     recordId = record.getRecordId();
-                                    
-                                    DateFormat format = new SimpleDateFormat("MM/dd/yyyy HH:mm");
-                                     visitstart = format.format(new Date(record.getVisitStart()));
-                                    
-                                    int doctorId = record.getDoctorId();
-                                    UserWithInfo doctor = UserHelper.findUserWithInfo(doctorId);
-                                     docname = doctor.getfName() + " " + doctor.getlName();
-                        %>
+                                for (Record r:rcd.keySet()) {
+                                    UserWithInfo u = rcd.get(r);
+                                    dName = u.getfName() + " " +  u.getlName();
+                                    recordId = r.getRecordId();
+                                    visitDate = format.format(new Date(r.getVisitStart()));
+                                    diagnosis = r.getDiagnosis();
+                                    prescriptions = r.getPrescriptions();
+                            %>  
                         <tr>
                             <td><%=recordId%></td>
-                            <td><%=docname%></td>
-                            <td><%=visitstart%></td>
+                            <td><%=dName%></td>
+                            <td><%=visitDate%></td>
+                            <td><%=diagnosis%></td>
                             <td><%=prescriptions%></td>
-                            <td><%=diag%></td>
                         </tr>
                                     
                         <%
